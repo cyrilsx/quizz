@@ -1,0 +1,8 @@
+{
+  "name": "QuizzMobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "com.quizzplatform.mobile"
+}

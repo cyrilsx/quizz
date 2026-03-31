@@ -1,0 +1,55 @@
+{
+  "QUIZ_CREATOR": {
+    "TITLE": "Créer un nouveau quiz",
+    "TITLE_LABEL": "Titre du quiz",
+    "DESCRIPTION_LABEL": "Description",
+    "PUBLIC_LABEL": "Rendre ce quiz public",
+    "CREATE_BUTTON": "Créer le quiz",
+    "GENERATE_AI_BUTTON": "Générer des questions avec IA",
+    "QUESTIONS_TITLE": "Questions du quiz",
+    "QUESTION": "Question",
+    "QUESTION_TEXT": "Texte de la question",
+    "ANSWERS": "Réponses",
+    "ANSWER": "Réponse",
+    "CORRECT_ANSWER": "Réponse correcte",
+    "ADD_ANSWER": "Ajouter une réponse",
+    "ADD_QUESTION": "Ajouter une question"
+  },
+  "QUIZ_PLAYER": {
+    "QUESTION": "Question",
+    "SUBMIT_ANSWER": "Soumettre la réponse",
+    "COMPLETED": "Quiz terminé !",
+    "SCORE": "Votre score",
+    "PERCENTAGE": "Pourcentage",
+    "RESTART": "Recommencer le quiz"
+  },
+  "QUIZ_SHARE": {
+    "TITLE": "Partager le quiz",
+    "SHARE_LINK": "Lien partageable",
+    "QR_CODE": "Code QR",
+    "DOWNLOAD_QR": "Télécharger le QR Code",
+    "INSTRUCTIONS": "Scannez ce code QR avec votre appareil mobile pour accéder directement au quiz."
+  },
+  "ERROR": {
+    "TITLE_REQUIRED": "Le titre du quiz est obligatoire",
+    "CREATE_FAILED": "Échec de la création du quiz",
+    "LOAD_QUIZ_FAILED": "Échec du chargement du quiz",
+    "NO_ANSWER_SELECTED": "Veuillez sélectionner une réponse",
+    "GENERATE_SHARE_FAILED": "Échec de la génération du lien de partage",
+    "GENERATE_QR_FAILED": "Échec de la génération du QR code",
+    "QUESTION_REQUIRED": "Toutes les questions doivent avoir un texte",
+    "ANSWER_REQUIRED": "Chaque question doit avoir au moins une réponse correcte",
+    "ANSWER_TEXT_REQUIRED": "Toutes les options de réponse doivent avoir un texte"
+  },
+  "SUCCESS": {
+    "QUIZ_CREATED": "Quiz créé avec succès !"
+  },
+  "AUTH": {
+    "LOGIN": "Connexion",
+    "REGISTER": "Inscription",
+    "USERNAME": "Nom d'utilisateur",
+    "PASSWORD": "Mot de passe",
+    "EMAIL": "Email",
+    "LOGOUT": "Déconnexion"
+  }
+}

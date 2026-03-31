@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'QUIZ_SHARE.TITLE' | translate }}: {{ quizTitle }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="isLoading" class="loading-overlay">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!isLoading && !error">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ 'QUIZ_SHARE.SHARE_LINK' | translate }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item>
+          <ion-input [value]="shareUrl" readonly></ion-input>
+          <ion-button fill="clear" (click)="copyToClipboard()">
+            <ion-icon name="copy-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{ 'QUIZ_SHARE.QR_CODE' | translate }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="qrcode-content">
+        <div *ngIf="qrCodeImage" class="qrcode-display">
+          <img [src]="qrCodeImage" alt="QR Code">
+        </div>
+        <ion-button expand="block" (click)="downloadQRCode()">
+          {{ 'QUIZ_SHARE.DOWNLOAD_QR' | translate }}
+        </ion-button>
+        <ion-button expand="block" (click)="scanQRCode()">
+          {{ 'QUIZ_SHARE.SCAN_QR' | translate }}
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content>
+        <p>{{ 'QUIZ_SHARE.INSTRUCTIONS' | translate }}</p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

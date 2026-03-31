@@ -1,0 +1,41 @@
+<div class="quiz-player-container">
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div *ngIf="error" class="alert error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!quizCompleted && !isLoading && !error">
+    <h2>{{ quizTitle }}</h2>
+    
+    <mat-progress-bar mode="determinate" [value]="getProgress()"></mat-progress-bar>
+    
+    <div class="question-card">
+      <h3>{{ 'QUIZ_PLAYER.QUESTION' | translate }} {{ currentQuestionIndex + 1 }} / {{ questions.length }}</h3>
+      <p>{{ getCurrentQuestion().text }}</p>
+
+      <div class="answers">
+        <button mat-button class="answer-option"
+                *ngFor="let answer of getCurrentQuestion().answers"
+                [class.selected]="answer.selected"
+                (click)="selectAnswer(answer)">
+          {{ answer.text }}
+        </button>
+      </div>
+
+      <button  color="primary" (click)="submitAnswer()" [disabled]="!getCurrentQuestion().answers.some(a => a.selected)"><span>{{ 'QUIZ_PLAYER.SUBMIT_ANSWER' | translate }}</span></button>
+    </div>
+  </div>
+
+  <div *ngIf="quizCompleted" class="results">
+    <h2>{{ 'QUIZ_PLAYER.COMPLETED' | translate }}</h2>
+    <p>{{ 'QUIZ_PLAYER.SCORE' | translate }}: {{ score }} / {{ questions.length }}</p>
+    <p>{{ 'QUIZ_PLAYER.PERCENTAGE' | translate }}: {{ (score / questions.length * 100).toFixed(1) }}%</p>
+
+    <button  color="accent" (click)="restartQuiz()">
+      {{ 'QUIZ_PLAYER.RESTART' | translate }}
+    </button>
+  </div>
+</div>

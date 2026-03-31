@@ -1,0 +1,89 @@
+<div class="quizz-creator-container">
+  <h2>{{ 'QUIZ_CREATOR.TITLE' | translate }}</h2>
+
+  <form (submit)="createQuiz()" class="quiz-form">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>{{ 'QUIZ_CREATOR.TITLE_LABEL' | translate }}</mat-label>
+      <input matInput [(ngModel)]="quizTitle" name="title" required>
+      <mat-error *ngIf="!quizTitle.trim() && (error || success)">
+        {{ 'ERROR.TITLE_REQUIRED' | translate }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>{{ 'QUIZ_CREATOR.DESCRIPTION_LABEL' | translate }}</mat-label>
+      <textarea matInput [(ngModel)]="quizDescription" name="description" rows="3"></textarea>
+    </mat-form-field>
+
+    <mat-checkbox [(ngModel)]="isPublic" name="isPublic">
+      {{ 'QUIZ_CREATOR.PUBLIC_LABEL' | translate }}
+    </mat-checkbox>
+
+    <div class="button-group">
+<button color="primary" type="submit" [disabled]="isLoading">
+        <span *ngIf="!isLoading">{{ 'QUIZ_CREATOR.CREATE_BUTTON' | translate }}</span>
+        <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+      </button>
+
+<button color="accent" type="button" (click)="generateAIQuestions()" [disabled]="isLoading">
+        <span>{{ 'QUIZ_CREATOR.GENERATE_AI_BUTTON' | translate }}</span>
+      </button>
+    </div>
+
+    <div *ngIf="error" class="alert error">
+      {{ error }}
+    </div>
+
+    <div *ngIf="success" class="alert success">
+      {{ success }}
+    </div>
+
+    <!-- Questions Section -->
+    <div class="questions-section">
+      <h3>{{ 'QUIZ_CREATOR.QUESTIONS_TITLE' | translate }}</h3>
+
+      <div *ngFor="let question of questions; let i = index" class="question-item">
+        <div class="question-header">
+          <h4>{{ 'QUIZ_CREATOR.QUESTION' | translate }} {{ i + 1 }}</h4>
+          <button mat-icon-button color="warn" (click)="removeQuestion(i)" *ngIf="questions.length > 1">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+        <mat-form-field appearance="fill" class="full-width">
+          <mat-label>{{ 'QUIZ_CREATOR.QUESTION_TEXT' | translate }}</mat-label>
+          <input matInput [(ngModel)]="question.text" name="question{{i}}" required>
+        </mat-form-field>
+
+        <div class="answers-section">
+          <h4>{{ 'QUIZ_CREATOR.ANSWERS' | translate }}</h4>
+
+          <div *ngFor="let answer of question.answers; let j = index" class="answer-item">
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>{{ 'QUIZ_CREATOR.ANSWER' | translate }} {{ j + 1 }}</mat-label>
+              <input matInput [(ngModel)]="answer.text" name="answer{{i}}_{{j}}" required>
+            </mat-form-field>
+
+            <mat-checkbox [(ngModel)]="answer.isCorrect" name="correct{{i}}_{{j}}">
+              {{ 'QUIZ_CREATOR.CORRECT_ANSWER' | translate }}
+            </mat-checkbox>
+
+            <button mat-icon-button color="warn" (click)="removeAnswer(i, j)" *ngIf="question.answers.length > 2">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+          <button mat-button color="primary" (click)="addAnswer(i)">
+            <mat-icon>add</mat-icon>
+            {{ 'QUIZ_CREATOR.ADD_ANSWER' | translate }}
+          </button>
+        </div>
+      </div>
+
+      <button mat-button color="primary" (click)="addQuestion()">
+        <mat-icon>add</mat-icon>
+        {{ 'QUIZ_CREATOR.ADD_QUESTION' | translate }}
+      </button>
+    </div>
+  </form>
+</div>

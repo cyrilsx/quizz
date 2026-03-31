@@ -1,0 +1,37 @@
+<div class="quiz-share-container">
+  <div *ngIf="isLoading" class="loading-overlay">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+
+  <div *ngIf="error" class="alert error">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!isLoading && !error">
+    <h2>{{ 'QUIZ_SHARE.TITLE' | translate }}: {{ quizTitle }}</h2>
+
+    <div class="share-section">
+      <h3>{{ 'QUIZ_SHARE.SHARE_LINK' | translate }}</h3>
+      <div class="url-display">
+        <input type="text" [value]="shareUrl" readonly>
+        <button mat-icon-button (click)="copyToClipboard()">
+          <mat-icon>content_copy</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="qrcode-section">
+      <h3>{{ 'QUIZ_SHARE.QR_CODE' | translate }}</h3>
+      <div *ngIf="qrCodeImage" class="qrcode-display">
+        <img [src]="qrCodeImage" alt="QR Code">
+        <button mat-raised-button color="primary" (click)="downloadQRCode()">
+          {{ 'QUIZ_SHARE.DOWNLOAD_QR' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <div class="instructions">
+      <p>{{ 'QUIZ_SHARE.INSTRUCTIONS' | translate }}</p>
+    </div>
+  </div>
+</div>
