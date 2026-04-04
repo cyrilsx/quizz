@@ -130,7 +130,7 @@ export class QuizzCreatorComponent {
     };
 
     this.quizService.createQuiz(quizData).subscribe({
-      next: (response) => {
+      next: () => {
         this.success = this.translate.instant('SUCCESS.QUIZ_CREATED');
         this.resetForm();
         this.isLoading = false;

@@ -38,11 +38,12 @@ export class QuizService {
     return this.quizzesService.generateShareToken(quizId);
   }
 
-  generateQRCode(quizId: number, baseUrl: string = 'http://localhost:4200'): Observable<any> {
+  generateQRCode(quizId: number, baseUrl: string = 'http://localhost:4200'): Observable<Blob> {
     const headers = this.getAuthHeaders();
     return this.http.get(`${this.apiUrl}/qrcodes/quiz/${quizId}`, {
       headers,
-      params: { baseUrl }
+      params: { baseUrl },
+      responseType: 'blob'
     });
   }
 
@@ -59,14 +60,14 @@ export class QuizService {
   }
 
   // Temporary session management
-  initTempSession(ipAddress: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/temp-sessions/init`, {}, {
+  initTempSession(ipAddress: string): Observable<{sessionId: string}> {
+    return this.http.post<{sessionId: string}>(`${this.apiUrl}/temp-sessions/init`, {}, {
       params: { ipAddress }
     });
   }
 
-  checkTempSession(ipAddress: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/temp-sessions/check`, {
+  checkTempSession(ipAddress: string): Observable<{valid: boolean, count: number}> {
+    return this.http.get<{valid: boolean, count: number}>(`${this.apiUrl}/temp-sessions/check`, {
       params: { ipAddress }
     });
   }

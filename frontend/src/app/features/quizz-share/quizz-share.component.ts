@@ -44,7 +44,7 @@ export class QuizzShareComponent implements OnInit {
       next: (quiz) => {
         this.quizTitle = quiz.title || '';
       },
-      error: (err) => {
+      error: () => {
         this.error = this.translate.instant('ERROR.LOAD_QUIZ_FAILED');
       }
     });
@@ -61,7 +61,7 @@ export class QuizzShareComponent implements OnInit {
         this.shareUrl = `${window.location.origin}/quiz/play/${this.quizId}?token=${this.shareToken}`;
         this.generateQRCode();
       },
-      error: (err) => {
+      error: () => {
         this.error = this.translate.instant('ERROR.GENERATE_SHARE_FAILED');
         this.isLoading = false;
       }
@@ -70,12 +70,15 @@ export class QuizzShareComponent implements OnInit {
 
   generateQRCode(): void {
     this.quizService.generateQRCode(this.quizId).subscribe({
-      next: (response) => {
-        const qrCodeData = `data:image/png;base64,${response.qrCodeImage}`;
-        this.qrCodeImage = this.sanitizer.bypassSecurityTrustUrl(qrCodeData);
+      next: (blob) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          this.qrCodeImage = this.sanitizer.bypassSecurityTrustUrl(reader.result as string);
+        };
+        reader.readAsDataURL(blob);
         this.isLoading = false;
       },
-      error: (err) => {
+      error: () => {
         this.error = this.translate.instant('ERROR.GENERATE_QR_FAILED');
         this.isLoading = false;
       }

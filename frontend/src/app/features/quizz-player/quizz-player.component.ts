@@ -61,7 +61,7 @@ export class QuizzPlayerComponent implements OnInit {
         this.initializeSampleQuestions();
         this.isLoading = false;
       },
-      error: (err) => {
+      error: () => {
         this.error = this.translate.instant('ERROR.LOAD_QUIZ_FAILED');
         this.isLoading = false;
       }
