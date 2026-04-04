@@ -42,7 +42,7 @@ export class QuizzShareComponent implements OnInit {
   loadQuizDetails(): void {
     this.quizService.getQuizById(this.quizId).subscribe({
       next: (quiz) => {
-        this.quizTitle = quiz.title;
+        this.quizTitle = quiz.title || '';
       },
       error: (err) => {
         this.error = this.translate.instant('ERROR.LOAD_QUIZ_FAILED');
@@ -57,7 +57,7 @@ export class QuizzShareComponent implements OnInit {
     // Generate share token
     this.quizService.generateShareToken(this.quizId).subscribe({
       next: (response) => {
-        this.shareToken = response.shareToken;
+        this.shareToken = response.shareToken || '';
         this.shareUrl = `${window.location.origin}/quiz/play/${this.quizId}?token=${this.shareToken}`;
         this.generateQRCode();
       },

@@ -56,7 +56,7 @@ export class QuizzPlayerComponent implements OnInit {
 
     this.quizService.getQuizById(this.quizId).subscribe({
       next: (quiz) => {
-        this.quizTitle = quiz.title;
+        this.quizTitle = quiz.title || '';
         // In a real implementation, you would load questions from the quiz
         this.initializeSampleQuestions();
         this.isLoading = false;

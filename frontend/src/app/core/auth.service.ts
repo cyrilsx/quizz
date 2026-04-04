@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { AuthenticationService } from './api/api/authentication.service';
+import { LoginRequest, RegisterRequest, AuthResponse } from './api/model/models';
 
 @Injectable({
   providedIn: 'root'
@@ -16,21 +18,23 @@ export class AuthService {
   private authSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
   authState$ = this.authSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/login`, { username, password }).pipe(
-      tap((response: any) => {
-        this.setAuthData(response.token, username);
+  login(username: string, password: string): Observable<AuthResponse> {
+    const request: LoginRequest = { username, password };
+    return this.authenticationService.login(request).pipe(
+      tap((response: AuthResponse) => {
+        this.setAuthData(response.token || '', username);
         this.authSubject.next(true);
       })
     );
   }
 
-  register(username: string, email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/register`, { username, email, password }).pipe(
-      tap((response: any) => {
-        this.setAuthData(response.token, username);
+  register(username: string, email: string, password: string): Observable<AuthResponse> {
+    const request: RegisterRequest = { username, email, password };
+    return this.authenticationService.register(request).pipe(
+      tap((response: AuthResponse) => {
+        this.setAuthData(response.token || '', username);
         this.authSubject.next(true);
       })
     );

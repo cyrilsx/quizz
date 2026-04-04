@@ -1,0 +1,406 @@
+openapi: 3.0.3
+info:
+  title: Quizz Platform API
+  description: API for Quizz Platform with authentication, quiz management, AI question generation, and translations
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+    description: Local development server
+  - url: https://api.quizzplatform.com/api
+    description: Production server
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Login user
+      description: Authenticate user and return JWT token
+      operationId: login
+      requestBody:
+        description: User login credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: Register new user
+      description: Create new user account
+      operationId: register
+      requestBody:
+        description: User registration information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: Successful registration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '400':
+          description: Registration error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  
+  /quizzes:
+    get:
+      tags:
+        - Quizzes
+      summary: Get all public quizzes
+      description: Retrieve list of all public quizzes
+      operationId: getAllQuizzes
+      responses:
+        '200':
+          description: List of public quizzes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuizResponse'
+    
+    post:
+      tags:
+        - Quizzes
+      summary: Create new quiz
+      description: Create a new quiz
+      operationId: createQuiz
+      requestBody:
+        description: Quiz information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuizRequest'
+      responses:
+        '200':
+          description: Created quiz
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizResponse'
+  
+  /quizzes/{id}:
+    get:
+      tags:
+        - Quizzes
+      summary: Get quiz by ID
+      description: Retrieve quiz details by ID
+      operationId: getQuizById
+      parameters:
+        - name: id
+          in: path
+          description: Quiz ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Quiz details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizResponse'
+        '404':
+          description: Quiz not found
+    
+    put:
+      tags:
+        - Quizzes
+      summary: Update quiz
+      description: Update existing quiz
+      operationId: updateQuiz
+      parameters:
+        - name: id
+          in: path
+          description: Quiz ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Updated quiz information
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuizRequest'
+      responses:
+        '200':
+          description: Updated quiz
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuizResponse'
+    
+    delete:
+      tags:
+        - Quizzes
+      summary: Delete quiz
+      description: Delete quiz by ID
+      operationId: deleteQuiz
+      parameters:
+        - name: id
+          in: path
+          description: Quiz ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Quiz deleted successfully
+  
+  /quizzes/{id}/share:
+    post:
+      tags:
+        - Quizzes
+      summary: Generate share token
+      description: Generate a share token for the quiz
+      operationId: generateShareToken
+      parameters:
+        - name: id
+          in: path
+          description: Quiz ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Share token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ShareResponse'
+  
+  /ia/generate-questions:
+    post:
+      tags:
+        - AI
+      summary: Generate questions using AI
+      description: Generate questions and answers for a given topic
+      operationId: generateQuestions
+      requestBody:
+        description: Question generation parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuestionGenerationRequest'
+      responses:
+        '200':
+          description: Generated questions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QuestionResponse'
+  
+  /translations:
+    get:
+      tags:
+        - Translations
+      summary: Get translation
+      description: Get translation for a specific key
+      operationId: getTranslation
+      parameters:
+        - name: key
+          in: query
+          description: Translation key
+          required: true
+          schema:
+            type: string
+        - name: lang
+          in: query
+          description: Language code (optional)
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Translation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationResponse'
+
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          example: "john_doe"
+        password:
+          type: string
+          example: "password123"
+      required:
+        - username
+        - password
+    
+    RegisterRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          example: "john_doe"
+        email:
+          type: string
+          example: "john@example.com"
+        password:
+          type: string
+          example: "password123"
+      required:
+        - username
+        - email
+        - password
+    
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Invalid credentials"
+    
+    QuizRequest:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "General Knowledge Quiz"
+        description:
+          type: string
+          example: "A quiz about general knowledge topics"
+        isPublic:
+          type: boolean
+          example: true
+      required:
+        - title
+        - description
+        - isPublic
+    
+    QuizResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        title:
+          type: string
+          example: "General Knowledge Quiz"
+        description:
+          type: string
+          example: "A quiz about general knowledge topics"
+        isPublic:
+          type: boolean
+          example: true
+        userId:
+          type: integer
+          format: int64
+          example: 1
+        username:
+          type: string
+          example: "john_doe"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2023-01-01T12:00:00Z"
+    
+    ShareResponse:
+      type: object
+      properties:
+        shareToken:
+          type: string
+          example: "abc123def456"
+    
+    QuestionGenerationRequest:
+      type: object
+      properties:
+        topic:
+          type: string
+          example: "History"
+        count:
+          type: integer
+          example: 5
+      required:
+        - topic
+        - count
+    
+    QuestionResponse:
+      type: object
+      properties:
+        questionText:
+          type: string
+          example: "What year did World War II end?"
+        answers:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnswerResponse'
+    
+    AnswerResponse:
+      type: object
+      properties:
+        answerText:
+          type: string
+          example: "1945"
+        isCorrect:
+          type: boolean
+          example: true
+    
+    TranslationResponse:
+      type: object
+      properties:
+        key:
+          type: string
+          example: "welcome.message"
+        translation:
+          type: string
+          example: "Welcome to our platform!"
+        locale:
+          type: string
+          example: "en-US"
+
+tags:
+  - name: Authentication
+    description: User authentication operations
+  - name: Quizzes
+    description: Quiz management operations
+  - name: AI
+    description: AI-powered question generation
+  - name: Translations
+    description: Internationalization and translation operations

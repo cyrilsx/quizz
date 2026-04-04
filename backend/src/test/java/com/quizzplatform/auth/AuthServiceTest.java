@@ -70,8 +70,12 @@ class AuthServiceTest {
     void authenticate_Success() {
         // Mock the loadUserByUsername to return a user with matching password
         when(userRepository.findByUsername("testuser")).thenReturn(Optional.of(testUser));
-        when(passwordEncoder.matches(eq("password"), eq("$2a$10$N9qo8uLOickgx2ZMRZoMy.M5c6S3b5J8JqLJ5J8JqLJ5J8JqLJ5J8"))).thenReturn(true);
-
+        
+        // Encode the password properly to match what BCryptPasswordEncoder expects
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodedPassword = encoder.encode("password");
+        testUser.setPassword(encodedPassword);
+        
         String token = authService.authenticate("testuser", "password");
 
         assertNotNull(token);
