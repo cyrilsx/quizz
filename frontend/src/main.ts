@@ -27,6 +27,8 @@ bootstrapApplication(AppComponent, {
       { path: 'quiz/share/:id', loadComponent: () => import('./app/features/quizz-share/quizz-share.component').then(m => m.QuizzShareComponent) },
       { path: 'auth/login', loadComponent: () => import('./app/features/auth/login.component').then(m => m.LoginComponent) },
       { path: 'auth/register', loadComponent: () => import('./app/features/auth/register.component').then(m => m.RegisterComponent) },
+      { path: 'temp-quiz/access', loadComponent: () => import('./app/features/temp-quiz/temp-quiz-access.component').then(m => m.TempQuizAccessComponent) },
+      { path: 'temp-quiz/stats/:id', loadComponent: () => import('./app/features/temp-quiz/temp-quiz-stats.component').then(m => m.TempQuizStatsComponent) },
       { path: '', redirectTo: '/home', pathMatch: 'full' }
     ]),
     provideHttpClient(),

@@ -36,6 +36,20 @@ import {RouterModule} from '@angular/router';
 
         <mat-card class="feature-card">
           <mat-card-header>
+            <mat-card-title>{{ 'HOME.JOIN_TEMP_QUIZ' | translate }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ 'HOME.JOIN_TEMP_QUIZ_DESCRIPTION' | translate }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="accent" routerLink="/temp-quiz/access">
+              {{ 'HOME.ACCESS_TEMP_QUIZ' | translate }}
+            </button>
+          </mat-card-actions>
+        </mat-card>
+
+        <mat-card class="feature-card">
+          <mat-card-header>
             <mat-card-title>{{ 'HOME.REGISTERED_TITLE' | translate }}</mat-card-title>
           </mat-card-header>
           <mat-card-content>
