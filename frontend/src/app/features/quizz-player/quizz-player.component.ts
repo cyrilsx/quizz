@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { QuizService } from '../../core/quiz.service';
-import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {Component, OnInit} from '@angular/core';
+import {QuizService} from '../../core/quiz.service';
+import {ActivatedRoute} from '@angular/router';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {CommonModule} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 interface Question {
   id: number;

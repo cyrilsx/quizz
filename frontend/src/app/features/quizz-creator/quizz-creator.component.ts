@@ -1,16 +1,15 @@
-import { Component } from '@angular/core';
-import { AuthService } from '../../core/auth.service';
-import { QuizService } from '../../core/quiz.service';
-import { TranslateService } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
+import {Component} from '@angular/core';
+import {AuthService} from '../../core/auth.service';
+import {QuizService} from '../../core/quiz.service';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {CommonModule} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {FormsModule} from '@angular/forms';
+import {MatIconModule} from '@angular/material/icon';
 
 interface Question {
   id: number;

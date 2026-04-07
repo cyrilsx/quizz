@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { QuizService } from '../../core/quiz.service';
-import { ActivatedRoute } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatIconModule } from '@angular/material/icon';
+import {Component, OnInit} from '@angular/core';
+import {QuizService} from '../../core/quiz.service';
+import {ActivatedRoute} from '@angular/router';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {CommonModule} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-quizz-share',
@@ -70,12 +69,9 @@ export class QuizzShareComponent implements OnInit {
 
   generateQRCode(): void {
     this.quizService.generateQRCode(this.quizId).subscribe({
-      next: (blob) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          this.qrCodeImage = this.sanitizer.bypassSecurityTrustUrl(reader.result as string);
-        };
-        reader.readAsDataURL(blob);
+      next: (base64String) => {
+        const imageUrl = `data:image/png;base64,${base64String}`;
+        this.qrCodeImage = this.sanitizer.bypassSecurityTrustUrl(imageUrl);
         this.isLoading = false;
       },
       error: () => {

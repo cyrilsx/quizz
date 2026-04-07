@@ -1,10 +1,15 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
-import { QuizzesService } from './api/api/quizzes.service';
-import { QuizRequest, QuizResponse, ShareResponse, QuestionGenerationRequest, QuestionResponse } from './api/model/models';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {Observable} from 'rxjs';
+import {AuthService} from './auth.service';
+import {
+  QuestionGenerationRequest,
+  QuestionResponse,
+  QuizRequest,
+  QuizResponse,
+  ShareResponse
+} from './api/model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,30 +17,30 @@ import { QuizRequest, QuizResponse, ShareResponse, QuestionGenerationRequest, Qu
 export class QuizService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private authService: AuthService, private quizzesService: QuizzesService) {}
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   getAllQuizzes(): Observable<QuizResponse[]> {
-    return this.quizzesService.getAllQuizzes();
+    return this.http.get<QuizResponse[]>(`${this.apiUrl}/quizzes`);
   }
 
   getQuizById(id: number): Observable<QuizResponse> {
-    return this.quizzesService.getQuizById(id);
+    return this.http.get<QuizResponse>(`${this.apiUrl}/quizzes/${id}`);
   }
 
   createQuiz(quizData: QuizRequest): Observable<QuizResponse> {
-    return this.quizzesService.createQuiz(quizData);
+    return this.http.post<QuizResponse>(`${this.apiUrl}/quizzes`, quizData, { headers: this.getAuthHeaders() });
   }
 
   updateQuiz(id: number, quizData: QuizRequest): Observable<QuizResponse> {
-    return this.quizzesService.updateQuiz(id, quizData);
+    return this.http.put<QuizResponse>(`${this.apiUrl}/quizzes/${id}`, quizData, { headers: this.getAuthHeaders() });
   }
 
   deleteQuiz(id: number): Observable<void> {
-    return this.quizzesService.deleteQuiz(id);
+    return this.http.delete<void>(`${this.apiUrl}/quizzes/${id}`, { headers: this.getAuthHeaders() });
   }
 
   generateShareToken(quizId: number): Observable<ShareResponse> {
-    return this.quizzesService.generateShareToken(quizId);
+    return this.http.post<ShareResponse>(`${this.apiUrl}/quizzes/${quizId}/share`, {}, { headers: this.getAuthHeaders() });
   }
 
   generateQRCode(quizId: number, baseUrl: string = 'http://localhost:4200'): Observable<Blob> {

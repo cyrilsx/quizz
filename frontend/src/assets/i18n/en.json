@@ -1,55 +1,35 @@
 {
-  "QUIZ_CREATOR": {
-    "TITLE": "Create New Quiz",
-    "TITLE_LABEL": "Quiz Title",
-    "DESCRIPTION_LABEL": "Description",
-    "PUBLIC_LABEL": "Make this quiz public",
-    "CREATE_BUTTON": "Create Quiz",
-    "GENERATE_AI_BUTTON": "Generate Questions with AI",
-    "QUESTIONS_TITLE": "Quiz Questions",
-    "QUESTION": "Question",
-    "QUESTION_TEXT": "Question Text",
-    "ANSWERS": "Answers",
-    "ANSWER": "Answer",
-    "CORRECT_ANSWER": "Correct answer",
-    "ADD_ANSWER": "Add Answer",
-    "ADD_QUESTION": "Add Question"
+  "HOME": {
+    "WELCOME": "Welcome to Quizz Platform",
+    "LOGIN": "Login / Register",
+    "CREATE_QUIZ": "Create Quiz",
+    "TEMP_QUIZ_TITLE": "Try Temporary Quiz",
+    "TEMP_QUIZ_DESCRIPTION": "Create a quiz without registration to test our platform.",
+    "TEMP_QUIZ_LIMITED": "Limited to 5 quizzes per session",
+    "TEMP_QUIZ_NO_SAVE": "Quizzes are not saved after session ends",
+    "TEMP_QUIZ_QUICK": "Quick and easy to start",
+    "START_TEMP_QUIZ": "Start Temporary Quiz",
+    "REGISTERED_TITLE": "Registered User Features",
+    "REGISTERED_DESCRIPTION": "Unlock full features by creating an account.",
+    "REGISTERED_SAVE": "Save and manage your quizzes",
+    "REGISTERED_SHARE": "Share quizzes with friends and colleagues",
+    "REGISTERED_ANALYTICS": "Get performance analytics and insights",
+    "REGISTERED_AI": "AI-powered question generation",
+    "REGISTERED_HISTORY": "Access your quiz history and results",
+    "REGISTER_NOW": "Register Now",
+    "LOGIN_REQUIRED": "Please login to access this feature",
+    "TEMP_SESSION_FAILED": "Failed to initialize temporary session"
   },
-  "QUIZ_PLAYER": {
-    "QUESTION": "Question",
-    "SUBMIT_ANSWER": "Submit Answer",
-    "COMPLETED": "Quiz Completed!",
-    "SCORE": "Your Score",
-    "PERCENTAGE": "Percentage",
-    "RESTART": "Restart Quiz"
-  },
-  "QUIZ_SHARE": {
-    "TITLE": "Share Quiz",
-    "SHARE_LINK": "Shareable Link",
-    "QR_CODE": "QR Code",
-    "DOWNLOAD_QR": "Download QR Code",
-    "INSTRUCTIONS": "Scan this QR code with your mobile device to access the quiz directly."
-  },
-  "ERROR": {
-    "TITLE_REQUIRED": "Quiz title is required",
-    "CREATE_FAILED": "Failed to create quiz",
-    "LOAD_QUIZ_FAILED": "Failed to load quiz",
-    "NO_ANSWER_SELECTED": "Please select an answer",
-    "GENERATE_SHARE_FAILED": "Failed to generate share link",
-    "GENERATE_QR_FAILED": "Failed to generate QR code",
-    "QUESTION_REQUIRED": "All questions must have text",
-    "ANSWER_REQUIRED": "Each question must have at least one correct answer",
-    "ANSWER_TEXT_REQUIRED": "All answer options must have text"
+  "AUTH": {
+    "LOGOUT": "Logout"
   },
   "SUCCESS": {
     "QUIZ_CREATED": "Quiz created successfully!"
   },
-  "AUTH": {
-    "LOGIN": "Login",
-    "REGISTER": "Register",
-    "USERNAME": "Username",
-    "PASSWORD": "Password",
-    "EMAIL": "Email",
-    "LOGOUT": "Logout"
+  "ERROR": {
+    "LOAD_QUIZ_FAILED": "Failed to load quiz",
+    "GENERATE_SHARE_FAILED": "Failed to generate share link",
+    "GENERATE_QR_FAILED": "Failed to generate QR code",
+    "TEMP_SESSION_FAILED": "Failed to initialize temporary session"
   }
 }

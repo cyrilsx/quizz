@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { AuthenticationService } from './api/api/authentication.service';
-import { LoginRequest, RegisterRequest, AuthResponse } from './api/model/models';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
+import {AuthResponse, LoginRequest, RegisterRequest} from './api/model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +17,11 @@ export class AuthService {
   private authSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
   authState$ = this.authSubject.asObservable();
 
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
+  constructor(private http: HttpClient) { }
 
   login(username: string, password: string): Observable<AuthResponse> {
     const request: LoginRequest = { username, password };
-    return this.authenticationService.login(request).pipe(
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, request).pipe(
       tap((response: AuthResponse) => {
         this.setAuthData(response.token || '', username);
         this.authSubject.next(true);
@@ -32,7 +31,7 @@ export class AuthService {
 
   register(username: string, email: string, password: string): Observable<AuthResponse> {
     const request: RegisterRequest = { username, email, password };
-    return this.authenticationService.register(request).pipe(
+    return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, request).pipe(
       tap((response: AuthResponse) => {
         this.setAuthData(response.token || '', username);
         this.authSubject.next(true);
@@ -69,5 +68,21 @@ export class AuthService {
     // In a real app, you would decode the JWT to get user ID
     // For now, we'll just store a dummy user ID
     localStorage.setItem(this.userIdKey, '1');
+  }
+
+  initTempSession(ipAddress: string): Observable<{sessionId: string}> {
+    return this.http.post<{sessionId: string}>(`${this.apiUrl}/temp-sessions/init`, {}, {
+      params: { ipAddress }
+    });
+  }
+
+  checkTempSession(ipAddress: string): Observable<{valid: boolean, count: number}> {
+    return this.http.get<{valid: boolean, count: number}>(`${this.apiUrl}/temp-sessions/check`, {
+      params: { ipAddress }
+    });
+  }
+
+  generateQRCode(quizId: number): Observable<{qrCodeImage: string}> {
+    return this.http.get<{qrCodeImage: string}>(`${this.apiUrl}/qrcodes/quiz/${quizId}`);
   }
 }

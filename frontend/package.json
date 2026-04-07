@@ -8,7 +8,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "eslint \"src/**/*.{ts,html}\" --fix",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "generate:api-models": "openapi-generator-cli generate -c openapi-interfaces-only-config.json && rm -rf src/app/core/api/api* src/app/core/api/*.ts && mv frontend/src/app/core/api/model/* src/app/core/api/model/ && rm -rf frontend/src/app/core/api"
   },
   "dependencies": {
     "@angular-devkit/build-angular": "^21.2.5",
@@ -28,6 +29,7 @@
     "@angular-eslint/eslint-plugin": "^21.3.1",
     "@angular-eslint/eslint-plugin-template": "^21.3.1",
     "@angular-eslint/template-parser": "^21.3.1",
+    "@openapitools/openapi-generator-cli": "^2.31.0",
     "@angular/animations": "^21.2.6",
     "@angular/cli": "^21.2.5",
     "@angular/compiler-cli": "^21.2.6",

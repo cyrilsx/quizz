@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { AuthService } from './core/auth.service';
-import { AppTranslateService } from './core/translate.service';
-import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { TranslateModule } from '@ngx-translate/core';
+import {Component, OnInit} from '@angular/core';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {AuthService} from './core/auth.service';
+import {AppTranslateService} from './core/translate.service';
+import {CommonModule} from '@angular/common';
+import {MatButtonModule} from '@angular/material/button';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, MatButtonModule, TranslateModule],
+    imports: [CommonModule, MatButtonModule, TranslateModule, RouterOutlet],
   template: `
     <div class="app-container">
       <nav class="navbar">
