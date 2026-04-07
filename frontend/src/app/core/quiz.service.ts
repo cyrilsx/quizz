@@ -9,7 +9,7 @@ import {
   QuizRequest,
   QuizResponse,
   ShareResponse
-} from './api/model';
+} from './api/models';
 
 @Injectable({
   providedIn: 'root'

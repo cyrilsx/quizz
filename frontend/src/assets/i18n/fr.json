@@ -1,4 +1,33 @@
 {
+  "HOME": {
+    "WELCOME": "Bienvenue sur la Plateforme de Quiz",
+    "LOGIN": "Connexion / Inscription",
+    "CREATE_QUIZ": "Créer un Quiz",
+    "TEMP_QUIZ_TITLE": "Essayer un Quiz Temporaire",
+    "TEMP_QUIZ_DESCRIPTION": "Créez un quiz sans inscription pour tester notre plateforme.",
+    "TEMP_QUIZ_LIMITED": "Limité à 5 quiz par session",
+    "TEMP_QUIZ_NO_SAVE": "Les quiz ne sont pas sauvegardés après la fin de la session",
+    "TEMP_QUIZ_QUICK": "Rapide et facile à démarrer",
+    "START_TEMP_QUIZ": "Démarrer un Quiz Temporaire",
+    "REGISTERED_TITLE": "Fonctionnalités pour les utilisateurs enregistrés",
+    "REGISTERED_DESCRIPTION": "Déverrouillez toutes les fonctionnalités en créant un compte.",
+    "REGISTERED_SAVE": "Sauvegardez et gérez vos quiz",
+    "REGISTERED_SHARE": "Partagez des quiz avec vos amis et collègues",
+    "REGISTERED_ANALYTICS": "Obtenez des analyses de performance et des insights",
+    "REGISTERED_AI": "Génération de questions alimentée par IA",
+    "REGISTERED_HISTORY": "Accédez à l'historique de vos quiz et résultats",
+    "REGISTER_NOW": "S'inscrire Maintenant",
+    "LOGIN_REQUIRED": "Veuillez vous connecter pour accéder à cette fonctionnalité",
+    "TEMP_SESSION_FAILED": "Échec de l'initialisation de la session temporaire"
+  },
+  "AUTH": {
+    "LOGIN": "Connexion",
+    "REGISTER": "Inscription",
+    "USERNAME": "Nom d'utilisateur",
+    "PASSWORD": "Mot de passe",
+    "EMAIL": "Email",
+    "LOGOUT": "Déconnexion"
+  },
   "QUIZ_CREATOR": {
     "TITLE": "Créer un nouveau quiz",
     "TITLE_LABEL": "Titre du quiz",
