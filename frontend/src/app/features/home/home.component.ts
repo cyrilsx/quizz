@@ -28,7 +28,7 @@ import {RouterModule} from '@angular/router';
             </ul>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-button color="primary" (click)="startTempQuiz()">
+            <button mat-button color="primary" routerLink="/quiz/create">
               {{ 'HOME.START_TEMP_QUIZ' | translate }}
             </button>
           </mat-card-actions>
@@ -49,7 +49,7 @@ import {RouterModule} from '@angular/router';
             </ul>
           </mat-card-content>
           <mat-card-actions>
-            <button *ngIf="!authService.isAuthenticated()" mat-button color="accent" routerLink="/quiz/create">
+            <button *ngIf="!authService.isAuthenticated()" mat-button color="accent" routerLink="/auth/register">
               {{ 'HOME.REGISTER_NOW' | translate }}
             </button>
             <button *ngIf="authService.isAuthenticated()" mat-button color="accent" routerLink="/quiz/create">
@@ -61,9 +61,14 @@ import {RouterModule} from '@angular/router';
       
       <div *ngIf="!authService.isAuthenticated()" class="auth-prompt">
         <p>{{ 'HOME.LOGIN_REQUIRED' | translate }}</p>
-        <button mat-button color="warn" routerLink="/auth/login">
-          {{ 'AUTH.LOGIN' | translate }}
-        </button>
+        <div class="auth-buttons">
+          <button mat-button color="primary" routerLink="/auth/login">
+            {{ 'AUTH.LOGIN' | translate }}
+          </button>
+          <button mat-button color="accent" routerLink="/auth/register">
+            {{ 'AUTH.REGISTER' | translate }}
+          </button>
+        </div>
       </div>
     </div>
   `,
@@ -101,6 +106,13 @@ import {RouterModule} from '@angular/router';
       padding: 1rem;
       background-color: #fff3cd;
       border-radius: 4px;
+    }
+
+    .auth-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
     }
     `
   ]

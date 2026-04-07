@@ -30,6 +30,8 @@
     "LOAD_QUIZ_FAILED": "Failed to load quiz",
     "GENERATE_SHARE_FAILED": "Failed to generate share link",
     "GENERATE_QR_FAILED": "Failed to generate QR code",
-    "TEMP_SESSION_FAILED": "Failed to initialize temporary session"
+    "TEMP_SESSION_FAILED": "Failed to initialize temporary session",
+    "TITLE_REQUIRED": "Title is required",
+    "CREATE_FAILED": "Failed to create quiz"
   }
 }

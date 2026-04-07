@@ -25,6 +25,8 @@ bootstrapApplication(AppComponent, {
       { path: 'quiz/create', loadComponent: () => import('./app/features/quizz-creator/quizz-creator.component').then(m => m.QuizzCreatorComponent) },
       { path: 'quiz/play/:id', loadComponent: () => import('./app/features/quizz-player/quizz-player.component').then(m => m.QuizzPlayerComponent) },
       { path: 'quiz/share/:id', loadComponent: () => import('./app/features/quizz-share/quizz-share.component').then(m => m.QuizzShareComponent) },
+      { path: 'auth/login', loadComponent: () => import('./app/features/auth/login.component').then(m => m.LoginComponent) },
+      { path: 'auth/register', loadComponent: () => import('./app/features/auth/register.component').then(m => m.RegisterComponent) },
       { path: '', redirectTo: '/home', pathMatch: 'full' }
     ]),
     provideHttpClient(),
