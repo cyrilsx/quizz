@@ -1,5 +1,6 @@
 package com.quizzplatform.quizz;
 
+import com.quizzplatform.util.QuizValidator;
 import lombok.Data;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +14,11 @@ import java.util.stream.Collectors;
 public class QuizzController {
 
     private final QuizService quizService;
+    private final QuizValidator quizValidator;
 
-    public QuizzController(QuizService quizService) {
+    public QuizzController(QuizService quizService, QuizValidator quizValidator) {
         this.quizService = quizService;
+        this.quizValidator = quizValidator;
     }
 
     @GetMapping
@@ -35,15 +38,22 @@ public class QuizzController {
     }
 
     @PostMapping
-    public ResponseEntity<QuizResponse> createQuiz(@RequestBody QuizRequest request) {
-        // In a real implementation, you would get the user ID from the JWT token
-        Long userId = 1L; // Temporary for demo
-        QuizEntity quiz = new QuizEntity();
-        quiz.setTitle(request.getTitle());
-        quiz.setDescription(request.getDescription());
-        quiz.setPublic(request.isPublic());
-        QuizEntity createdQuiz = quizService.createQuiz(quiz, userId);
-        return ResponseEntity.ok(convertToResponse(createdQuiz));
+    public ResponseEntity<QuizResponse> createQuiz(@RequestBody com.quizzplatform.api.model.QuizRequest request) {
+        try {
+            // Validate and sanitize input
+            quizValidator.validateAndSanitize(request);
+            
+            // In a real implementation, you would get the user ID from the JWT token
+            Long userId = 1L; // Temporary for demo
+            QuizEntity quiz = new QuizEntity();
+            quiz.setTitle(request.getTitle());
+            quiz.setDescription(request.getDescription());
+            quiz.setPublic(request.getIsPublic());
+            QuizEntity createdQuiz = quizService.createQuiz(quiz, userId);
+            return ResponseEntity.ok(convertToResponse(createdQuiz));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @PutMapping("/{id}")

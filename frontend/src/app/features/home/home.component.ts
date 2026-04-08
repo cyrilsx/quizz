@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthService} from '../../core/auth.service';
+import {CookieService} from '../../core/cookie.service';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
@@ -28,9 +29,12 @@ import {RouterModule} from '@angular/router';
             </ul>
           </mat-card-content>
           <mat-card-actions>
-            <button mat-button color="primary" routerLink="/quiz/create">
+            <button mat-button color="primary" routerLink="/quiz/create" [disabled]="!cookieService.canCreateQuiz()">
               {{ 'HOME.START_TEMP_QUIZ' | translate }}
             </button>
+            <div *ngIf="!cookieService.canCreateQuiz()" class="quiz-limit-message">
+              {{ 'HOME.TEMP_QUIZ_LIMIT_REACHED' | translate }}
+            </div>
           </mat-card-actions>
         </mat-card>
 
@@ -128,12 +132,20 @@ import {RouterModule} from '@angular/router';
       gap: 1rem;
       margin-top: 1rem;
     }
+
+    .quiz-limit-message {
+      color: #f44336;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      text-align: center;
+    }
     `
   ]
 })
 export class HomeComponent {
   constructor(
     public authService: AuthService,
+    public cookieService: CookieService,
     private translate: TranslateService
   ) {}
 

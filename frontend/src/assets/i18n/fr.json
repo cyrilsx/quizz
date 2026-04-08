@@ -6,6 +6,7 @@
     "TEMP_QUIZ_TITLE": "Essayer un Quiz Temporaire",
     "TEMP_QUIZ_DESCRIPTION": "Créez un quiz sans inscription pour tester notre plateforme.",
     "TEMP_QUIZ_LIMITED": "Limité à 5 quiz par session",
+    "TEMP_QUIZ_LIMIT_REACHED": "Vous avez atteint la limite maximale de 5 quiz temporaires. Veuillez vous inscrire pour des quiz illimités.",
     "TEMP_QUIZ_NO_SAVE": "Les quiz ne sont pas sauvegardés après la fin de la session",
     "TEMP_QUIZ_QUICK": "Rapide et facile à démarrer",
     "START_TEMP_QUIZ": "Démarrer un Quiz Temporaire",
@@ -29,7 +30,8 @@
     "USERNAME": "Nom d'utilisateur",
     "PASSWORD": "Mot de passe",
     "EMAIL": "Email",
-    "LOGOUT": "Déconnexion"
+    "LOGOUT": "Déconnexion",
+    "HOME": "Accueil"
   },
   "QUIZ_CREATOR": {
     "TITLE": "Créer un nouveau quiz",

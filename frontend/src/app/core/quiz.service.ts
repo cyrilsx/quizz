@@ -2,7 +2,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 import {AuthService} from './auth.service';
+import {CookieService} from './cookie.service';
 import {
   QuestionGenerationRequest,
   QuestionResponse,
@@ -17,7 +19,7 @@ import {
 export class QuizService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private authService: AuthService, private cookieService: CookieService) {}
 
   getAllQuizzes(): Observable<QuizResponse[]> {
     return this.http.get<QuizResponse[]>(`${this.apiUrl}/quizzes`);
@@ -28,6 +30,18 @@ export class QuizService {
   }
 
   createQuiz(quizData: QuizRequest): Observable<QuizResponse> {
+    // Check if this is a temporary quiz (no auth token)
+    if (!this.authService.isAuthenticated()) {
+      if (!this.cookieService.canCreateQuiz()) {
+        throw new Error('Maximum temporary quiz limit reached');
+      }
+      // Increment the count after successful creation
+      return this.http.post<QuizResponse>(`${this.apiUrl}/quizzes`, quizData).pipe(
+        tap(() => {
+          this.cookieService.incrementQuizCount();
+        })
+      );
+    }
     return this.http.post<QuizResponse>(`${this.apiUrl}/quizzes`, quizData, { headers: this.getAuthHeaders() });
   }
 

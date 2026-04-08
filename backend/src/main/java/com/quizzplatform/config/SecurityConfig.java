@@ -1,6 +1,8 @@
 package com.quizzplatform.config;
 
 import com.quizzplatform.auth.AuthService;
+import com.quizzplatform.config.RateLimitFilter;
+import com.quizzplatform.config.SecurityHeadersFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,10 +23,15 @@ public class SecurityConfig {
 
     private final AuthService authService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final SecurityHeadersFilter securityHeadersFilter;
+    private final RateLimitFilter rateLimitFilter;
 
-    public SecurityConfig(AuthService authService, JwtAuthenticationFilter jwtAuthenticationFilter) {
+    public SecurityConfig(AuthService authService, JwtAuthenticationFilter jwtAuthenticationFilter, 
+                          SecurityHeadersFilter securityHeadersFilter, RateLimitFilter rateLimitFilter) {
         this.authService = authService;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.securityHeadersFilter = securityHeadersFilter;
+        this.rateLimitFilter = rateLimitFilter;
     }
 
     @Bean
@@ -40,7 +47,9 @@ public class SecurityConfig {
             .sessionManagement(session -> session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(securityHeadersFilter, JwtAuthenticationFilter.class)
+            .addFilterBefore(rateLimitFilter, SecurityHeadersFilter.class);
 
         return http.build();
     }

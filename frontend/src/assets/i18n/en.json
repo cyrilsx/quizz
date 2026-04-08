@@ -6,6 +6,7 @@
     "TEMP_QUIZ_TITLE": "Try Temporary Quiz",
     "TEMP_QUIZ_DESCRIPTION": "Create a quiz without registration to test our platform.",
     "TEMP_QUIZ_LIMITED": "Limited to 5 quizzes per session",
+    "TEMP_QUIZ_LIMIT_REACHED": "You have reached the maximum limit of 5 temporary quizzes. Please register for unlimited quizzes.",
     "TEMP_QUIZ_NO_SAVE": "Quizzes are not saved after session ends",
     "TEMP_QUIZ_QUICK": "Quick and easy to start",
     "START_TEMP_QUIZ": "Start Temporary Quiz",
@@ -21,10 +22,17 @@
     "REGISTERED_HISTORY": "Access your quiz history and results",
     "REGISTER_NOW": "Register Now",
     "LOGIN_REQUIRED": "Please login to access this feature",
-    "TEMP_SESSION_FAILED": "Failed to initialize temporary session"
+    "TEMP_SESSION_FAILED": "Failed to initialize temporary session",
+    "TEMP_QUIZ_LIMIT_REACHED": "You have reached the maximum limit of 5 temporary quizzes. Please register for unlimited quizzes."
   },
   "AUTH": {
-    "LOGOUT": "Logout"
+    "LOGIN": "Login",
+    "REGISTER": "Register",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "EMAIL": "Email",
+    "LOGOUT": "Logout",
+    "HOME": "Home"
   },
   "SUCCESS": {
     "QUIZ_CREATED": "Quiz created successfully!"

@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthService} from '../../core/auth.service';
+import {CookieService} from '../../core/cookie.service';
 import {QuizService} from '../../core/quiz.service';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
@@ -52,6 +53,7 @@ export class QuizzCreatorComponent {
 
   constructor(
     private authService: AuthService,
+    private cookieService: CookieService,
     private quizService: QuizService,
     private translate: TranslateService
   ) {}
@@ -109,6 +111,12 @@ export class QuizzCreatorComponent {
           return;
         }
       }
+    }
+
+    // Check temp quiz limit for unauthenticated users
+    if (!this.authService.isAuthenticated() && !this.cookieService.canCreateQuiz()) {
+      this.error = this.translate.instant('HOME.TEMP_QUIZ_LIMIT_REACHED');
+      return;
     }
 
     this.isLoading = true;

@@ -4,6 +4,7 @@ import {environment} from '../../environments/environment';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {AuthResponse, LoginRequest, RegisterRequest} from './api/models';
+import {CookieService} from './cookie.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +18,14 @@ export class AuthService {
   private authSubject = new BehaviorSubject<boolean>(this.isAuthenticated());
   authState$ = this.authSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   login(username: string, password: string): Observable<AuthResponse> {
     const request: LoginRequest = { username, password };
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/login`, request).pipe(
       tap((response: AuthResponse) => {
         this.setAuthData(response.token || '', username);
+        this.resetTempQuizCount(); // Reset quiz limit when user authenticates
         this.authSubject.next(true);
       })
     );
@@ -34,6 +36,7 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.apiUrl}/auth/register`, request).pipe(
       tap((response: AuthResponse) => {
         this.setAuthData(response.token || '', username);
+        this.resetTempQuizCount(); // Reset quiz limit when user authenticates
         this.authSubject.next(true);
       })
     );
@@ -44,6 +47,27 @@ export class AuthService {
     localStorage.removeItem(this.usernameKey);
     localStorage.removeItem(this.userIdKey);
     this.authSubject.next(false);
+  }
+
+  /**
+   * Check if user can create a temporary quiz (client-side check)
+   */
+  canCreateTempQuiz(): boolean {
+    return this.cookieService.canCreateQuiz();
+  }
+
+  /**
+   * Increment temp quiz count (client-side tracking)
+   */
+  incrementTempQuizCount(): void {
+    this.cookieService.incrementQuizCount();
+  }
+
+  /**
+   * Reset temp quiz count (when user authenticates)
+   */
+  resetTempQuizCount(): void {
+    this.cookieService.resetQuizCount();
   }
 
   isAuthenticated(): boolean {

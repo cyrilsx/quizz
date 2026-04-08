@@ -15,6 +15,9 @@ import {RouterOutlet} from '@angular/router';
       <nav class="navbar">
         <div class="navbar-brand">Quizz Platform</div>
         <div class="navbar-actions">
+          <button mat-button routerLink="/home">
+            {{ 'AUTH.HOME' | translate }}
+          </button>
           <button mat-button (click)="changeLanguage('en')">English</button>
           <button mat-button (click)="changeLanguage('fr')">Français</button>
           <button *ngIf="authService.isAuthenticated()" mat-button (click)="logout()">
@@ -53,6 +56,10 @@ import {RouterOutlet} from '@angular/router';
     .navbar-actions {
       display: flex;
       gap: 1rem;
+    }
+
+    .navbar-actions button:first-child {
+      font-weight: bold;
     }
 
     .navbar-actions button {
