@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {QuizService} from '../../core/quiz.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterModule} from '@angular/router';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {CommonModule} from '@angular/common';
@@ -12,7 +12,7 @@ import {MatIconModule} from '@angular/material/icon';
 @Component({
   selector: 'app-quizz-share',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatButtonModule, MatCardModule, MatProgressSpinnerModule, MatIconModule],
+  imports: [CommonModule, TranslateModule, MatButtonModule, MatCardModule, MatProgressSpinnerModule, MatIconModule, RouterModule],
   templateUrl: './quizz-share.component.html',
   styleUrls: ['./quizz-share.component.css']
 })

@@ -1,7 +1,42 @@
+# IDE
 .idea/
-*iml
+*.iml
+*.ipr
+*.iws
+
+# Java
+*.class
 target/
-dist/
+*.jar
+*.war
+*.ear
+
+# Maven
+pom.xml.versionsBackup
+
+# Node
 node_modules/
+npm-debug.log*
+
+# Angular
 .angular
+dist/
+
+# Build outputs
+build/
+out/
+
+# Cache
 cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*
+.env.local
+
+# Logs
+*.log

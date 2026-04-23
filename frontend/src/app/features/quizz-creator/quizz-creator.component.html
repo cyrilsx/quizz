@@ -1,5 +1,11 @@
 <div class="quizz-creator-container">
-  <h2>{{ 'QUIZ_CREATOR.TITLE' | translate }}</h2>
+  <div class="header">
+    <h2>{{ 'QUIZ_CREATOR.TITLE' | translate }}</h2>
+    <button mat-button color="primary" routerLink="/home">
+      <mat-icon>arrow_back</mat-icon>
+      {{ 'AUTH.BACK_HOME' | translate }}
+    </button>
+  </div>
 
   <form (submit)="createQuiz()" class="quiz-form">
     <mat-form-field appearance="fill" class="full-width">

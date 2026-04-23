@@ -11,6 +11,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {FormsModule} from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
+import {RouterModule} from '@angular/router';
 
 interface Question {
   id: number;
@@ -27,7 +28,7 @@ interface Answer {
 @Component({
   selector: 'app-quizz-creator',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatCheckboxModule, MatProgressSpinnerModule, FormsModule, MatIconModule],
+  imports: [CommonModule, TranslateModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatCheckboxModule, MatProgressSpinnerModule, FormsModule, MatIconModule, RouterModule],
   templateUrl: './quizz-creator.component.html',
   styleUrls: ['./quizz-creator.component.css']
 })

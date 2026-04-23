@@ -31,7 +31,8 @@
     "PASSWORD": "Mot de passe",
     "EMAIL": "Email",
     "LOGOUT": "Déconnexion",
-    "HOME": "Accueil"
+    "HOME": "Accueil",
+    "BACK_HOME": "Retour à l'Accueil"
   },
   "QUIZ_CREATOR": {
     "TITLE": "Créer un nouveau quiz",
@@ -109,13 +110,5 @@
   },
   "SUCCESS": {
     "QUIZ_CREATED": "Quiz créé avec succès !"
-  },
-  "AUTH": {
-    "LOGIN": "Connexion",
-    "REGISTER": "Inscription",
-    "USERNAME": "Nom d'utilisateur",
-    "PASSWORD": "Mot de passe",
-    "EMAIL": "Email",
-    "LOGOUT": "Déconnexion"
   }
 }

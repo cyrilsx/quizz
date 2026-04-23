@@ -10,19 +10,34 @@ import {MatCardModule} from '@angular/material/card';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {FormsModule} from '@angular/forms';
 import {RouterModule, Router} from '@angular/router';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
   selector: 'app-temp-quiz-access',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatCardModule, MatCheckboxModule, FormsModule, RouterModule],
+  imports: [CommonModule, TranslateModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatCardModule, MatCheckboxModule, FormsModule, RouterModule, MatIconModule],
   template: `
     <div class="temp-quiz-access-container">
       <mat-card class="access-card">
         <mat-card-header>
           <mat-card-title>{{ 'TEMP_QUIZ.ACCESS_TITLE' | translate }}</mat-card-title>
+          <mat-card-subtitle>{{ 'TEMP_QUIZ.INFO_TEXT' | translate }}</mat-card-subtitle>
         </mat-card-header>
+        
         <mat-card-content>
-          <form (ngSubmit)="joinQuiz()" class="access-form">
+          <form id="joinForm" (ngSubmit)="joinQuiz()" class="access-form">
+            <div class="form-actions-top">
+              <button mat-button color="primary" routerLink="/home" type="button">
+                <mat-icon>arrow_back</mat-icon>
+                {{ 'AUTH.BACK_HOME' | translate }}
+              </button>
+              <span class="spacer"></span>
+              <button mat-raised-button color="primary" type="submit" [disabled]="isLoading || !quizCode">
+                <span *ngIf="!isLoading">{{ 'TEMP_QUIZ.JOIN_QUIZ' | translate }}</span>
+                <span *ngIf="isLoading">{{ 'TEMP_QUIZ.JOINING' | translate }}...</span>
+              </button>
+            </div>
+
             <mat-form-field appearance="fill" class="full-width">
               <mat-label>{{ 'TEMP_QUIZ.QUIZ_CODE' | translate }}</mat-label>
               <input matInput [(ngModel)]="quizCode" name="quizCode" required>
@@ -40,16 +55,8 @@ import {RouterModule, Router} from '@angular/router';
             <div *ngIf="error" class="error-message">
               {{ error }}
             </div>
-
-            <button mat-raised-button color="primary" type="submit" [disabled]="isLoading || !quizCode">
-              <span *ngIf="!isLoading">{{ 'TEMP_QUIZ.JOIN_QUIZ' | translate }}</span>
-              <span *ngIf="isLoading">{{ 'TEMP_QUIZ.JOINING' | translate }}...</span>
-            </button>
           </form>
         </mat-card-content>
-        <mat-card-footer>
-          <p class="info-text">{{ 'TEMP_QUIZ.INFO_TEXT' | translate }}</p>
-        </mat-card-footer>
       </mat-card>
     </div>
   `,
@@ -95,6 +102,23 @@ import {RouterModule, Router} from '@angular/router';
 
     mat-checkbox {
       margin-bottom: 1rem;
+    }
+
+    .form-actions-top {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .spacer {
+      flex: 1;
+    }
+
+    .form-actions-top button[type="submit"] {
+      margin-left: auto;
     }
     `
   ]

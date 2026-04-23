@@ -8,7 +8,13 @@
   </div>
 
   <div *ngIf="!quizCompleted && !isLoading && !error">
-    <h2>{{ quizTitle }}</h2>
+    <div class="header">
+      <h2>{{ quizTitle }}</h2>
+      <button mat-button color="primary" routerLink="/home">
+        <mat-icon>arrow_back</mat-icon>
+        {{ 'AUTH.BACK_HOME' | translate }}
+      </button>
+    </div>
     
     <mat-progress-bar mode="determinate" [value]="getProgress()"></mat-progress-bar>
     
@@ -34,8 +40,14 @@
     <p>{{ 'QUIZ_PLAYER.SCORE' | translate }}: {{ score }} / {{ questions.length }}</p>
     <p>{{ 'QUIZ_PLAYER.PERCENTAGE' | translate }}: {{ (score / questions.length * 100).toFixed(1) }}%</p>
 
-    <button  color="accent" (click)="restartQuiz()">
-      {{ 'QUIZ_PLAYER.RESTART' | translate }}
-    </button>
+    <div class="button-group">
+      <button mat-button color="primary" routerLink="/home">
+        <mat-icon>arrow_back</mat-icon>
+        {{ 'AUTH.BACK_HOME' | translate }}
+      </button>
+      <button mat-button color="accent" (click)="restartQuiz()">
+        {{ 'QUIZ_PLAYER.RESTART' | translate }}
+      </button>
+    </div>
   </div>
 </div>

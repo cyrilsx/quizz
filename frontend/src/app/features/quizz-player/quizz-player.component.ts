@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {QuizService} from '../../core/quiz.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterModule} from '@angular/router';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatIconModule} from '@angular/material/icon';
 
 interface Question {
   id: number;
@@ -24,7 +25,7 @@ interface Answer {
 @Component({
   selector: 'app-quizz-player',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatButtonModule, MatCardModule, MatProgressSpinnerModule, MatProgressBarModule],
+  imports: [CommonModule, TranslateModule, MatButtonModule, MatCardModule, MatProgressSpinnerModule, MatProgressBarModule, MatIconModule, RouterModule],
   templateUrl: './quizz-player.component.html',
   styleUrls: ['./quizz-player.component.css']
 })

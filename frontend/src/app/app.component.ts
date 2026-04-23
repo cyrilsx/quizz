@@ -4,16 +4,18 @@ import {AuthService} from './core/auth.service';
 import {AppTranslateService} from './core/translate.service';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
-import {RouterOutlet} from '@angular/router';
+import {RouterOutlet, RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-    imports: [CommonModule, MatButtonModule, TranslateModule, RouterOutlet],
+    imports: [CommonModule, MatButtonModule, TranslateModule, RouterOutlet, RouterModule],
   template: `
     <div class="app-container">
       <nav class="navbar">
-        <div class="navbar-brand">Quizz Platform</div>
+        <button mat-button class="navbar-brand" routerLink="/">
+          Quizz Platform
+        </button>
         <div class="navbar-actions">
           <button mat-button routerLink="/home">
             {{ 'AUTH.HOME' | translate }}
@@ -51,6 +53,17 @@ import {RouterOutlet} from '@angular/router';
     .navbar-brand {
       font-size: 1.5rem;
       font-weight: bold;
+      color: white;
+      background: none;
+      box-shadow: none;
+      padding: 0;
+      height: auto;
+      line-height: normal;
+      cursor: pointer;
+    }
+
+    .navbar-brand:hover {
+      text-decoration: underline;
     }
 
     .navbar-actions {

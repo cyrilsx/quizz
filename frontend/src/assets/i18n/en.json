@@ -32,7 +32,39 @@
     "PASSWORD": "Password",
     "EMAIL": "Email",
     "LOGOUT": "Logout",
-    "HOME": "Home"
+    "HOME": "Home",
+    "BACK_HOME": "Back to Home"
+  },
+  "QUIZ_CREATOR": {
+    "TITLE": "Create a new quiz",
+    "TITLE_LABEL": "Quiz Title",
+    "DESCRIPTION_LABEL": "Description",
+    "PUBLIC_LABEL": "Make this quiz public",
+    "CREATE_BUTTON": "Create Quiz",
+    "GENERATE_AI_BUTTON": "Generate questions with AI",
+    "QUESTIONS_TITLE": "Quiz Questions",
+    "QUESTION": "Question",
+    "QUESTION_TEXT": "Question text",
+    "ANSWERS": "Answers",
+    "ANSWER": "Answer",
+    "CORRECT_ANSWER": "Correct answer",
+    "ADD_ANSWER": "Add answer",
+    "ADD_QUESTION": "Add question"
+  },
+  "QUIZ_PLAYER": {
+    "QUESTION": "Question",
+    "SUBMIT_ANSWER": "Submit answer",
+    "COMPLETED": "Quiz completed!",
+    "SCORE": "Your score",
+    "PERCENTAGE": "Percentage",
+    "RESTART": "Restart quiz"
+  },
+  "QUIZ_SHARE": {
+    "TITLE": "Share the quiz",
+    "SHARE_LINK": "Shareable link",
+    "QR_CODE": "QR Code",
+    "DOWNLOAD_QR": "Download QR Code",
+    "INSTRUCTIONS": "Scan this QR code with your mobile device to access the quiz directly."
   },
   "SUCCESS": {
     "QUIZ_CREATED": "Quiz created successfully!"
@@ -44,7 +76,11 @@
     "TEMP_SESSION_FAILED": "Failed to initialize temporary session",
     "TITLE_REQUIRED": "Title is required",
     "CREATE_FAILED": "Failed to create quiz",
-    "CODE_REQUIRED": "Quiz code is required"
+    "CODE_REQUIRED": "Quiz code is required",
+    "QUESTION_REQUIRED": "All questions must have text",
+    "ANSWER_REQUIRED": "Each question must have at least one correct answer",
+    "ANSWER_TEXT_REQUIRED": "All answer options must have text",
+    "NO_ANSWER_SELECTED": "Please select an answer"
   },
   "TEMP_QUIZ": {
     "ACCESS_TITLE": "Join Temporary Quiz",

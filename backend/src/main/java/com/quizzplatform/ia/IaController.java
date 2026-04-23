@@ -25,7 +25,7 @@ public class IaController {
         List<QuestionEntity> questions = iaService.generateQuestions(request.getTopic(), request.getCount());
         List<QuestionResponse> responses = questions.stream()
                 .map(this::convertToResponse)
-                .collect(Collectors.toList());
+                .toList();
         
         return ResponseEntity.ok(responses);
     }

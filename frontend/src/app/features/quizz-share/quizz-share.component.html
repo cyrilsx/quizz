@@ -8,7 +8,13 @@
   </div>
 
   <div *ngIf="!isLoading && !error">
-    <h2>{{ 'QUIZ_SHARE.TITLE' | translate }}: {{ quizTitle }}</h2>
+    <div class="header">
+      <h2>{{ 'QUIZ_SHARE.TITLE' | translate }}: {{ quizTitle }}</h2>
+      <button mat-button color="primary" routerLink="/home">
+        <mat-icon>arrow_back</mat-icon>
+        {{ 'AUTH.BACK_HOME' | translate }}
+      </button>
+    </div>
 
     <div class="share-section">
       <h3>{{ 'QUIZ_SHARE.SHARE_LINK' | translate }}</h3>
