@@ -1,0 +1,41 @@
+# Ignore temporary files and IDE-specific files in .vibe directory
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+
+# IDE-specific files
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Logs
+*.log
+
+# Build artifacts
+*.class
+*.jar
+target/
+
+# Dependency directories
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Test coverage reports
+coverage/
+
+# Profiler data
+*.prof
+
+# Cache directories
+.cache/
+
+# Temporary directories
+tmp/
+temp/
