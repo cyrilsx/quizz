@@ -1,0 +1,60 @@
+<div class="home-container">
+  <!-- Login/Register Button in Navbar -->
+  <div class="navbar-actions">
+    <button *ngIf="!authService.isAuthenticated()" mat-raised-button color="primary" (click="navigateToLogin()">
+      {{ 'HOME.LOGIN' | translate }}
+    </button>
+    <button *ngIf="authService.isAuthenticated()" mat-raised-button color="accent" (click="navigateToCreateQuiz()">
+      {{ 'HOME.CREATE_QUIZ' | translate }}
+    </button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h1>{{ 'HOME.WELCOME' | translate }}</h1>
+
+    <div class="features-container">
+      <!-- Temporary Quiz Section -->
+      <mat-card class="feature-card">
+        <mat-card-header>
+          <mat-card-title>{{ 'HOME.TEMP_QUIZ_TITLE' | translate }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ 'HOME.TEMP_QUIZ_DESCRIPTION' | translate }}</p>
+          <ul>
+            <li>{{ 'HOME.TEMP_QUIZ_LIMITED' | translate }}</li>
+            <li>{{ 'HOME.TEMP_QUIZ_NO_SAVE' | translate }}</li>
+            <li>{{ 'HOME.TEMP_QUIZ_QUICK' | translate }}</li>
+          </ul>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click="initTempSession()">
+            {{ 'HOME.START_TEMP_QUIZ' | translate }}
+          </button>
+        </mat-card-actions>
+      </mat-card>
+
+      <!-- Registered Features Section -->
+      <mat-card class="feature-card">
+        <mat-card-header>
+          <mat-card-title>{{ 'HOME.REGISTERED_TITLE' | translate }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{ 'HOME.REGISTERED_DESCRIPTION' | translate }}</p>
+          <ul>
+            <li>{{ 'HOME.REGISTERED_SAVE' | translate }}</li>
+            <li>{{ 'HOME.REGISTERED_SHARE' | translate }}</li>
+            <li>{{ 'HOME.REGISTERED_ANALYTICS' | translate }}</li>
+            <li>{{ 'HOME.REGISTERED_AI' | translate }}</li>
+            <li>{{ 'HOME.REGISTERED_HISTORY' | translate }}</li>
+          </ul>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="accent" (click="navigateToLogin()">
+            {{ 'HOME.REGISTER_NOW' | translate }}
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

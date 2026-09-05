@@ -1,0 +1,35 @@
+{
+  "inputSpec": "../openapi.yaml",
+  "generatorName": "typescript-angular",
+  "outputDir": "frontend/src/app/core/api",
+  "additionalProperties": {
+    "ngVersion": "21.2.6",
+    "supportsES6": true,
+    "snapshot": false,
+    "npmName": "quizz-api-client",
+    "npmVersion": "1.0.0",
+    "npmRepository": "https://github.com/GIT_USER_ID/GIT_REPO_ID.git",
+    "withInterfaces": true,
+    "modelPropertyNaming": "original",
+    "fileNaming": "kebab-case",
+    "useSingleRequestParameter": true,
+    "returnObservable": true,
+    "generateApis": false,
+    "generateModels": true,
+    "generateModelTests": false,
+    "generateApiTests": false,
+    "generateSupportingFiles": false,
+    "skipFormModel": true
+  },
+  "skipOverwrite": false,
+  "removeOperationIdPrefix": false,
+  "configHelp": false,
+  "dryRun": false,
+  "importMappings": {},
+  "instana": {
+    "key": "",
+    "endpoint": "",
+    "reportingInterval": 0,
+    "disableCertCheck": false
+  }
+}

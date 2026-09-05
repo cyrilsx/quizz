@@ -1,0 +1,31 @@
+{
+  "inputSpec": "../openapi.yaml",
+  "generatorName": "typescript",
+  "outputDir": "frontend/src/app/core/api/model",
+  "additionalProperties": {
+    "npmName": "quizz-api-interfaces",
+    "npmVersion": "1.0.0",
+    "supportsES6": true,
+    "withInterfaces": true,
+    "interfacePrefix": "I",
+    "generateApis": false,
+    "generateModels": true,
+    "generateModelTests": false,
+    "generateApiTests": false,
+    "generateSupportingFiles": false,
+    "skipFormModel": true,
+    "modelPropertyNaming": "original",
+    "fileNaming": "kebab-case"
+  },
+  "skipOverwrite": false,
+  "removeOperationIdPrefix": false,
+  "configHelp": false,
+  "dryRun": false,
+  "importMappings": {},
+  "instana": {
+    "key": "",
+    "endpoint": "",
+    "reportingInterval": 0,
+    "disableCertCheck": false
+  }
+}
