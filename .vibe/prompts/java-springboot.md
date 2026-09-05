@@ -25,7 +25,7 @@ Create a Spring Boot REST controller for managing quizzes with the following req
 - Follow existing code patterns in the project
 
 Project context:
-- Spring Boot 4, Java 21
+- Spring Boot 4, Java 25
 - Spring Security with JWT
 - PostgreSQL database
 - Existing modules: auth, quizz, ia, translation
@@ -156,7 +156,7 @@ Create the following record classes for quiz DTOs:
    - isCorrect: boolean (required)
 
 Requirements:
-- Use Java 21 records
+- Use Java 25 records
 - Add proper validation annotations
 - Use appropriate data types
 - Follow existing DTO patterns

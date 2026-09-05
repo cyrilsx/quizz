@@ -8,7 +8,7 @@ This document provides instructions for AI agents (like Vibe Code) working on th
 
 ```
 quizz-platform/
-├── backend/                    # Spring Boot 4 (Java 21)
+├── backend/                    # Spring Boot 4 (Java 25)
 │   ├── src/main/java/com/quizzplatform/
 │   │   ├── auth/              # Authentication module (JWT)
 │   │   ├── quizz/             # Quiz management module
@@ -58,7 +58,7 @@ quizz-platform/
 - `backend/src/main/resources/openapi.yaml`
 
 **Conventions:**
-- Use Java 21 features (records, sealed classes)
+- Use Java 25 features (records, sealed classes)
 - Follow Spring Boot 4 conventions
 - RESTful API design
 - JWT authentication required for protected endpoints
@@ -264,7 +264,7 @@ private String QuizTitle;            // NOT like this
 // Constants
 private static final int MAX_QUESTIONS = 100;  // UPPER_SNAKE_CASE
 
-// DTOs use records (Java 21)
+// DTOs use records (Java 25)
 public record QuizRequest(String title, String description, int questionCount) { }
 
 // Entities use Lombok or manual getters/setters

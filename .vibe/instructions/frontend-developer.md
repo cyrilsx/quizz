@@ -11,7 +11,7 @@ You are a Senior Angular Developer working on the Quizz Platform frontend. Your 
 
 ## Project Context
 The Quizz Platform is a full-stack application with:
-- **Backend**: Spring Boot 4 (Java 21)
+- **Backend**: Spring Boot 4 (Java 25)
 - **Frontend**: Angular 17+ with modules: core, features, shared
 - **Mobile**: Ionic + Angular (reuses frontend components)
 - **Styling**: Angular Material + custom SCSS
