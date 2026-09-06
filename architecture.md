@@ -19,7 +19,7 @@
   - `translation/` : Gestion des traductions.
 
 ## Frontend
-- **Technologies** : Angular 17+, Material Design, NgRx (optionnel), ngx-translate.
+- **Technologies** : Angular 22.2, Material Design, NgRx (optionnel), ngx-translate.
 - **Composants** :
   - `QuizzCreatorComponent` : Interface pour créer un quizz.
   - `QuizzPlayerComponent` : Interface pour passer un quizz.

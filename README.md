@@ -25,7 +25,7 @@ Voir [Architecture.md](docs/architecture.md) pour les détails.
 - **Tests** :
   - JUnit 5 pour les services.
 
-### 2. Frontend (Angular 17+)
+### 2. Frontend (Angular 22.2)
 - **Modules** :
   - `core/auth/` : Service d’authentification.
   - `features/quizz/` : Composants pour créer/participer aux quizz.

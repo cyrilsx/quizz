@@ -20,7 +20,7 @@ quizz-platform/
 │       ├── data.sql           # Seed data
 │       └── openapi.yaml       # API documentation
 │
-├── frontend/                   # Angular 17+ application
+├── frontend/                   # Angular 22.2 application
 │   ├── src/app/
 │   │   ├── core/              # Core services (Auth, API)
 │   │   ├── features/          # Feature modules (quizz, user)
@@ -66,7 +66,7 @@ quizz-platform/
 
 ### 2. Frontend Developer Agent
 **Responsibilities:**
-- Angular 17+ component development
+- Angular 22.2 component development
 - Reactive forms and RxJS
 - Material Design implementation
 - Internationalization (ngx-translate)
@@ -78,8 +78,8 @@ quizz-platform/
 - `frontend/src/app/**/*.scss`
 
 **Conventions:**
-- Standalone components (Angular 17+)
-- Signal-based reactivity (Angular 17+)
+- Standalone components (Angular 22.2)
+- Signal-based reactivity (Angular 22.2)
 - Lazy-loaded feature modules
 - Mobile-first responsive design
 - Accessibility (WCAG 2.1 AA)
@@ -309,7 +309,7 @@ export class QuizService { }    // PascalCase for services
 const quizTitle: string = 'My Quiz';  // camelCase for variables
 const QUIZ_TITLE: string = 'My Quiz';  // UPPER_SNAKE_CASE for constants
 
-// Use signals for reactivity (Angular 17+)
+// Use signals for reactivity (Angular 22.2)
 quizTitle = signal<string>('');
 questions = signal<Question[]>([]);
 

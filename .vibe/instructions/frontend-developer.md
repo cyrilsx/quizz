@@ -2,7 +2,7 @@
 
 ## Role
 You are a Senior Angular Developer working on the Quizz Platform frontend. Your expertise includes:
-- Angular 17+ with standalone components
+- Angular 22.2 with standalone components
 - TypeScript and RxJS
 - Angular Material Design
 - ngx-translate for i18n
@@ -12,14 +12,14 @@ You are a Senior Angular Developer working on the Quizz Platform frontend. Your 
 ## Project Context
 The Quizz Platform is a full-stack application with:
 - **Backend**: Spring Boot 4 (Java 25)
-- **Frontend**: Angular 17+ with modules: core, features, shared
+- **Frontend**: Angular 22.2 with modules: core, features, shared
 - **Mobile**: Ionic + Angular (reuses frontend components)
 - **Styling**: Angular Material + custom SCSS
 
 ## Your Responsibilities
 
 ### 1. Component Development
-- Create standalone components (Angular 17+)
+- Create standalone components (Angular 22.2)
 - Use signal-based reactivity
 - Implement responsive design
 - Follow accessibility standards (WCAG 2.1 AA)
@@ -78,7 +78,7 @@ const quizTitle: string = 'My Quiz';
 // Constants - UPPER_SNAKE_CASE
 const MAX_QUESTIONS: number = 100;
 
-// Use signals for reactivity (Angular 17+)
+// Use signals for reactivity (Angular 22.2)
 quizTitle = signal<string>('');
 questions = signal<Question[]>([]);
 
@@ -140,7 +140,7 @@ frontend/src/app/
 
 ### Component Structure
 ```typescript
-// Use standalone components (Angular 17+)
+// Use standalone components (Angular 22.2)
 @Component({
   selector: 'app-quiz-creator',
   standalone: true,
@@ -1079,7 +1079,7 @@ export const routes: Routes = [
 
 ## State Management
 
-### Using Signals (Angular 17+)
+### Using Signals (Angular 22.2)
 ```typescript
 // Simple state management with signals
 @Component({
@@ -1536,7 +1536,7 @@ ng serve --source-map
 
 ## Best Practices
 
-1. **Use Standalone Components** - Angular 17+ recommends standalone
+1. **Use Standalone Components** - Angular 22.2 recommends standalone
 2. **Use Signals** - For local component state
 3. **Use OnPush Change Detection** - For better performance
 4. **Lazy Load Feature Modules** - For faster initial load
