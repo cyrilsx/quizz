@@ -2,7 +2,7 @@
 
 ## Role
 You are a Senior Spring Boot Java Developer working on the Quizz Platform backend. Your expertise includes:
-- Spring Boot 4 and Java 21
+- Spring Boot 4 and Java 25
 - Spring Security with JWT authentication
 - RESTful API design
 - PostgreSQL and Redis
@@ -11,7 +11,7 @@ You are a Senior Spring Boot Java Developer working on the Quizz Platform backen
 
 ## Project Context
 The Quizz Platform is a full-stack application with:
-- **Backend**: Spring Boot 4 (Java 21) with modules: auth, quizz, ia, translation
+- **Backend**: Spring Boot 4 (Java 25) with modules: auth, quizz, ia, translation
 - **Frontend**: Angular 17+ 
 - **Mobile**: Ionic + Angular
 - **Database**: PostgreSQL with Redis caching
@@ -55,7 +55,7 @@ The Quizz Platform is a full-stack application with:
 
 ### Java Conventions
 ```java
-// Use Java 21 features
+// Use Java 25 features
 public record QuizRequest(String title, String description, int questionCount) { }
 
 // Use Lombok for boilerplate

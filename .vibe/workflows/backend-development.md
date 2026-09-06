@@ -4,7 +4,7 @@
 This workflow guides AI agents through the process of developing backend features for the Quizz Platform.
 
 ## Prerequisites
-- Java 21 installed
+- Java 25 installed
 - Maven installed
 - PostgreSQL running
 - Redis running
@@ -141,7 +141,7 @@ git push -u origin feature/add-ai-question-generation
 
 **Best Practices:**
 - Follow existing code patterns
-- Use Java 21 features (records, sealed classes)
+- Use Java 25 features (records, sealed classes)
 - Add proper validation
 - Handle errors gracefully
 - Add comprehensive logging

@@ -8,7 +8,7 @@ This document provides instructions for AI agents (like Vibe Code) working on th
 
 ```
 quizz-platform/
-├── backend/                    # Spring Boot 4 (Java 21)
+├── backend/                    # Spring Boot 4 (Java 25)
 │   ├── src/main/java/com/quizzplatform/
 │   │   ├── auth/              # Authentication module (JWT)
 │   │   ├── quizz/             # Quiz management module
@@ -20,7 +20,7 @@ quizz-platform/
 │       ├── data.sql           # Seed data
 │       └── openapi.yaml       # API documentation
 │
-├── frontend/                   # Angular 17+ application
+├── frontend/                   # Angular 22.2 application
 │   ├── src/app/
 │   │   ├── core/              # Core services (Auth, API)
 │   │   ├── features/          # Feature modules (quizz, user)
@@ -58,7 +58,7 @@ quizz-platform/
 - `backend/src/main/resources/openapi.yaml`
 
 **Conventions:**
-- Use Java 21 features (records, sealed classes)
+- Use Java 25 features (records, sealed classes)
 - Follow Spring Boot 4 conventions
 - RESTful API design
 - JWT authentication required for protected endpoints
@@ -66,7 +66,7 @@ quizz-platform/
 
 ### 2. Frontend Developer Agent
 **Responsibilities:**
-- Angular 17+ component development
+- Angular 22.2 component development
 - Reactive forms and RxJS
 - Material Design implementation
 - Internationalization (ngx-translate)
@@ -78,8 +78,8 @@ quizz-platform/
 - `frontend/src/app/**/*.scss`
 
 **Conventions:**
-- Standalone components (Angular 17+)
-- Signal-based reactivity (Angular 17+)
+- Standalone components (Angular 22.2)
+- Signal-based reactivity (Angular 22.2)
 - Lazy-loaded feature modules
 - Mobile-first responsive design
 - Accessibility (WCAG 2.1 AA)
@@ -264,7 +264,7 @@ private String QuizTitle;            // NOT like this
 // Constants
 private static final int MAX_QUESTIONS = 100;  // UPPER_SNAKE_CASE
 
-// DTOs use records (Java 21)
+// DTOs use records (Java 25)
 public record QuizRequest(String title, String description, int questionCount) { }
 
 // Entities use Lombok or manual getters/setters
@@ -309,7 +309,7 @@ export class QuizService { }    // PascalCase for services
 const quizTitle: string = 'My Quiz';  // camelCase for variables
 const QUIZ_TITLE: string = 'My Quiz';  // UPPER_SNAKE_CASE for constants
 
-// Use signals for reactivity (Angular 17+)
+// Use signals for reactivity (Angular 22.2)
 quizTitle = signal<string>('');
 questions = signal<Question[]>([]);
 

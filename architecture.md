@@ -6,7 +6,7 @@
 # Architecture Technique
 
 ## Backend
-- **Technologies** : Spring Boot 4, Java 21, Spring Security, PostgreSQL, Redis.
+- **Technologies** : Spring Boot 4, Java 25, Spring Security, PostgreSQL, Redis.
 - **Endpoints** (exemples) :
   - `POST /api/auth/login` → JWT.
   - `GET /api/quizzes` → Liste des quizz publics.
@@ -19,7 +19,7 @@
   - `translation/` : Gestion des traductions.
 
 ## Frontend
-- **Technologies** : Angular 17+, Material Design, NgRx (optionnel), ngx-translate.
+- **Technologies** : Angular 22.2, Material Design, NgRx (optionnel), ngx-translate.
 - **Composants** :
   - `QuizzCreatorComponent` : Interface pour créer un quizz.
   - `QuizzPlayerComponent` : Interface pour passer un quizz.
