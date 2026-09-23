@@ -86,7 +86,7 @@ public class QuizService {
     public String generateShareToken(Long quizId, Long userId) {
         QuizEntity quiz = quizRepository.findById(quizId)
                 .orElseThrow(() -> new NoSuchElementException("Quiz not found"));
-        if (quiz.getUser() == null || !quiz.getUser().getId().equals(userId)) {
+        if (quiz.getUser() != null && !quiz.getUser().getId().equals(userId)) {
             throw new SecurityException("User does not own this quiz");
         }
 
