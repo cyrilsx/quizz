@@ -95,17 +95,20 @@ class QuizIntegrationTest extends PostgresTestContainer {
         assertEquals(1, publicQuizzes.size());
 
         // Test share token generation
-        String shareToken = quizService.generateShareToken(savedQuiz.getId());
+        String shareToken = quizService.generateShareToken(savedQuiz.getId(), testUser.getId());
         assertNotNull(shareToken);
         assertTrue(shareToken.length() > 0);
+        // Share token resolves back to the quiz
+        assertTrue(quizService.getQuizIdByShareToken(shareToken).isPresent());
+        assertEquals(savedQuiz.getId(), quizService.getQuizIdByShareToken(shareToken).get());
 
         // Test quiz update
         foundQuiz.setTitle("Updated Test Quiz");
-        QuizEntity updatedQuiz = quizService.updateQuiz(foundQuiz.getId(), foundQuiz);
+        QuizEntity updatedQuiz = quizService.updateQuiz(foundQuiz.getId(), foundQuiz, testUser.getId());
         assertEquals("Updated Test Quiz", updatedQuiz.getTitle());
 
         // Test quiz deletion (cascade should delete questions and answers too)
-        quizService.deleteQuiz(foundQuiz.getId());
+        quizService.deleteQuiz(foundQuiz.getId(), testUser.getId());
         assertFalse(quizRepository.existsById(foundQuiz.getId()));
     }
 

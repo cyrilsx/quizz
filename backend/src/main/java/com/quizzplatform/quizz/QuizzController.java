@@ -1,12 +1,16 @@
 package com.quizzplatform.quizz;
 
+import com.quizzplatform.auth.UserEntity;
+import com.quizzplatform.auth.UserRepository;
 import com.quizzplatform.util.QuizValidator;
-import lombok.Data;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RestController
@@ -15,10 +19,12 @@ public class QuizzController {
 
     private final QuizService quizService;
     private final QuizValidator quizValidator;
+    private final UserRepository userRepository;
 
-    public QuizzController(QuizService quizService, QuizValidator quizValidator) {
+    public QuizzController(QuizService quizService, QuizValidator quizValidator, UserRepository userRepository) {
         this.quizService = quizService;
         this.quizValidator = quizValidator;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -31,51 +37,109 @@ public class QuizzController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<QuizResponse> getQuizById(@PathVariable Long id) {
-        return quizService.getQuizById(id)
+    public ResponseEntity<QuizResponse> getQuizById(
+            @PathVariable Long id,
+            @RequestParam(required = false) String token,
+            Authentication authentication) {
+        return quizService.getAccessibleQuiz(id, token, resolveUserId(authentication))
                 .map(quiz -> ResponseEntity.ok(convertToResponse(quiz)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<QuizResponse> createQuiz(@RequestBody com.quizzplatform.api.model.QuizRequest request) {
+    public ResponseEntity<QuizResponse> createQuiz(
+            @RequestBody com.quizzplatform.api.model.QuizRequest request,
+            Authentication authentication) {
         try {
-            // Validate and sanitize input
             quizValidator.validateAndSanitize(request);
-            
-            // In a real implementation, you would get the user ID from the JWT token
-            Long userId = 1L; // Temporary for demo
+
             QuizEntity quiz = new QuizEntity();
             quiz.setTitle(request.getTitle());
             quiz.setDescription(request.getDescription());
-            quiz.setPublic(request.getIsPublic());
-            QuizEntity createdQuiz = quizService.createQuiz(quiz, userId);
+            quiz.setPublic(Boolean.TRUE.equals(request.getIsPublic()));
+
+            Long userId = resolveUserId(authentication);
+            QuizEntity createdQuiz = userId != null
+                    ? quizService.createQuiz(quiz, userId)
+                    : quizService.createAnonymousQuiz(quiz);
             return ResponseEntity.ok(convertToResponse(createdQuiz));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().build();
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<QuizResponse> updateQuiz(@PathVariable Long id, @RequestBody QuizRequest request) {
-        QuizEntity quiz = new QuizEntity();
-        quiz.setTitle(request.getTitle());
-        quiz.setDescription(request.getDescription());
-        quiz.setPublic(request.isPublic());
-        QuizEntity updatedQuiz = quizService.updateQuiz(id, quiz);
-        return ResponseEntity.ok(convertToResponse(updatedQuiz));
+    public ResponseEntity<QuizResponse> updateQuiz(
+            @PathVariable Long id,
+            @RequestBody com.quizzplatform.api.model.QuizRequest request,
+            Authentication authentication) {
+        Long userId = resolveUserId(authentication);
+        if (userId == null) {
+            return ResponseEntity.status(401).build();
+        }
+        try {
+            quizValidator.validateAndSanitize(request);
+
+            QuizEntity quiz = new QuizEntity();
+            quiz.setTitle(request.getTitle());
+            quiz.setDescription(request.getDescription());
+            quiz.setPublic(Boolean.TRUE.equals(request.getIsPublic()));
+            QuizEntity updatedQuiz = quizService.updateQuiz(id, quiz, userId);
+            return ResponseEntity.ok(convertToResponse(updatedQuiz));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteQuiz(@PathVariable Long id) {
-        quizService.deleteQuiz(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deleteQuiz(@PathVariable Long id, Authentication authentication) {
+        Long userId = resolveUserId(authentication);
+        if (userId == null) {
+            return ResponseEntity.status(401).build();
+        }
+        try {
+            quizService.deleteQuiz(id, userId);
+            return ResponseEntity.noContent().build();
+        } catch (SecurityException e) {
+            return ResponseEntity.status(403).build();
+        }
     }
 
     @PostMapping("/{id}/share")
-    public ResponseEntity<ShareResponse> generateShareToken(@PathVariable Long id) {
-        String token = quizService.generateShareToken(id);
-        return ResponseEntity.ok(new ShareResponse(token));
+    public ResponseEntity<ShareResponse> generateShareToken(@PathVariable Long id, Authentication authentication) {
+        Long userId = resolveUserId(authentication);
+        if (userId == null) {
+            return ResponseEntity.status(401).build();
+        }
+        try {
+            String token = quizService.generateShareToken(id, userId);
+            return ResponseEntity.ok(new ShareResponse(token));
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.notFound().build();
+        } catch (SecurityException e) {
+            return ResponseEntity.status(403).build();
+        }
+    }
+
+    @GetMapping("/shared/{token}")
+    public ResponseEntity<QuizResponse> getQuizByShareToken(@PathVariable String token) {
+        return quizService.getQuizIdByShareToken(token)
+                .flatMap(quizService::getQuizById)
+                .map(quiz -> ResponseEntity.ok(convertToResponse(quiz)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    private Long resolveUserId(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return null;
+        }
+        Object principal = authentication.getPrincipal();
+        String username = principal instanceof UserDetails userDetails
+                ? userDetails.getUsername()
+                : principal.toString();
+        return userRepository.findByUsername(username)
+                .map(UserEntity::getId)
+                .orElse(null);
     }
 
     private QuizResponse convertToResponse(QuizEntity quiz) {
@@ -90,36 +154,6 @@ public class QuizzController {
             response.setUsername(quiz.getUser().getUsername());
         }
         return response;
-    }
-
-    public static class QuizRequest {
-        private String title;
-        private String description;
-        private boolean isPublic;
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public boolean isPublic() {
-            return isPublic;
-        }
-
-        public void setPublic(boolean isPublic) {
-            this.isPublic = isPublic;
-        }
     }
 
     public static class QuizResponse {

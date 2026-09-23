@@ -5,7 +5,9 @@ import com.quizzplatform.auth.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -14,10 +16,12 @@ public class QuizService {
 
     private final QuizRepository quizRepository;
     private final UserRepository userRepository;
+    private final ShareRepository shareRepository;
 
-    public QuizService(QuizRepository quizRepository, UserRepository userRepository) {
+    public QuizService(QuizRepository quizRepository, UserRepository userRepository, ShareRepository shareRepository) {
         this.quizRepository = quizRepository;
         this.userRepository = userRepository;
+        this.shareRepository = shareRepository;
     }
 
     public List<QuizEntity> getAllPublicQuizzes() {
@@ -41,9 +45,13 @@ public class QuizService {
     }
 
     @Transactional
-    public QuizEntity updateQuiz(Long id, QuizEntity quizDetails) {
-        QuizEntity quiz = quizRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Quiz not found"));
+    public QuizEntity createAnonymousQuiz(QuizEntity quiz) {
+        return quizRepository.save(quiz);
+    }
+
+    @Transactional
+    public QuizEntity updateQuiz(Long id, QuizEntity quizDetails, Long userId) {
+        QuizEntity quiz = getOwnedQuiz(id, userId);
         quiz.setTitle(quizDetails.getTitle());
         quiz.setDescription(quizDetails.getDescription());
         quiz.setPublic(quizDetails.isPublic());
@@ -51,14 +59,48 @@ public class QuizService {
     }
 
     @Transactional
-    public void deleteQuiz(Long id) {
-        quizRepository.deleteById(id);
+    public void deleteQuiz(Long id, Long userId) {
+        QuizEntity quiz = getOwnedQuiz(id, userId);
+        shareRepository.deleteByQuizId(quiz.getId());
+        quizRepository.delete(quiz);
     }
 
-    public String generateShareToken(Long quizId) {
-        // Generate a unique share token
-        String token = UUID.randomUUID().toString();
-        // In a real implementation, you would save this to the shares table
-        return token;
+    private QuizEntity getOwnedQuiz(Long id, Long userId) {
+        QuizEntity quiz = quizRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Quiz not found"));
+        if (quiz.getUser() == null || !quiz.getUser().getId().equals(userId)) {
+            throw new SecurityException("User does not own this quiz");
+        }
+        return quiz;
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<QuizEntity> getAccessibleQuiz(Long id, String shareToken, Long userId) {
+        return quizRepository.findById(id)
+                .filter(quiz -> quiz.isPublic()
+                        || (userId != null && quiz.getUser() != null && quiz.getUser().getId().equals(userId))
+                        || (shareToken != null && getQuizIdByShareToken(shareToken).filter(id::equals).isPresent()));
+    }
+
+    @Transactional
+    public String generateShareToken(Long quizId, Long userId) {
+        QuizEntity quiz = quizRepository.findById(quizId)
+                .orElseThrow(() -> new NoSuchElementException("Quiz not found"));
+        if (quiz.getUser() == null || !quiz.getUser().getId().equals(userId)) {
+            throw new SecurityException("User does not own this quiz");
+        }
+
+        ShareEntity share = new ShareEntity();
+        share.setQuizId(quiz.getId());
+        share.setShareToken(UUID.randomUUID().toString());
+        shareRepository.save(share);
+        return share.getShareToken();
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Long> getQuizIdByShareToken(String shareToken) {
+        return shareRepository.findByShareToken(shareToken)
+                .filter(share -> share.getExpiresAt() == null || share.getExpiresAt().isAfter(LocalDateTime.now()))
+                .map(ShareEntity::getQuizId);
     }
 }

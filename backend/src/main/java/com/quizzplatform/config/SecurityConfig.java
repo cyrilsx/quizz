@@ -41,7 +41,11 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/translations/**").permitAll()
+                .requestMatchers("/api/temp-sessions/**").permitAll()
+                .requestMatchers("/api/ia/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/quizzes", "/api/quizzes/*", "/api/quizzes/shared/*").permitAll()
+                .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/quizzes").permitAll()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
