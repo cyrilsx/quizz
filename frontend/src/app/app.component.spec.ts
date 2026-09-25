@@ -2,31 +2,35 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {AuthService} from './core/auth.service';
-import {RouterTestingModule} from '@angular/router/testing';
-import {MatButtonModule} from '@angular/material/button';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AppTranslateService} from './core/translate.service';
+import {provideRouter} from '@angular/router';
+import {provideNoopAnimations} from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let authService: AuthService;
+  let authService: jasmine.SpyObj<AuthService>;
+  let appTranslateService: jasmine.SpyObj<AppTranslateService>;
   let translateService: TranslateService;
 
   beforeEach(async () => {
+    const authServiceSpy = jasmine.createSpyObj<AuthService>('AuthService', ['logout', 'isAuthenticated']);
+    const appTranslateSpy = jasmine.createSpyObj<AppTranslateService>('AppTranslateService', ['use']);
+
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        MatButtonModule,
-        BrowserAnimationsModule,
-        TranslateModule.forRoot()
-      ],
-      declarations: [AppComponent],
-      providers: [AuthService]
+      imports: [AppComponent, TranslateModule.forRoot()],
+      providers: [
+        provideRouter([]),
+        provideNoopAnimations(),
+        {provide: AuthService, useValue: authServiceSpy},
+        {provide: AppTranslateService, useValue: appTranslateSpy}
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    authService = TestBed.inject(AuthService);
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
+    appTranslateService = TestBed.inject(AppTranslateService) as jasmine.SpyObj<AppTranslateService>;
     translateService = TestBed.inject(TranslateService);
     fixture.detectChanges();
   });
@@ -36,11 +40,8 @@ describe('AppComponent', () => {
   });
 
   it('should set default language on init', () => {
-    spyOn(translateService, 'setDefaultLang');
-    spyOn(translateService, 'use');
     component.ngOnInit();
-    expect(translateService.setDefaultLang).toHaveBeenCalledWith('en');
-    expect(translateService.use).toHaveBeenCalledWith('en');
+    expect(appTranslateService.use).toHaveBeenCalledWith('en');
   });
 
   it('should change language when changeLanguage is called', () => {
@@ -50,7 +51,6 @@ describe('AppComponent', () => {
   });
 
   it('should call authService.logout() when logout is called', () => {
-    spyOn(authService, 'logout');
     component.logout();
     expect(authService.logout).toHaveBeenCalled();
   });
