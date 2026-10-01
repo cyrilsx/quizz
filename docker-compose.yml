@@ -1,0 +1,49 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: quizz
+      POSTGRES_USER: quizz
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-quizz}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quizz"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ./backend
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/quizz
+      DB_USERNAME: quizz
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-quizz}
+      REDIS_HOST: redis
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET must be set}
+      MISTRAL_API_KEY: ${MISTRAL_API_KEY:-}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8081}
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
