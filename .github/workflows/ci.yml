@@ -5,60 +5,88 @@ on:
     branches: [main]
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   backend:
-    name: Backend (Maven)
+    name: Backend (Java 25)
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+
+      - name: Set up Java 25
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '25'
           cache: maven
-      - name: Build and test
-        working-directory: backend
-        run: mvn --batch-mode --no-transfer-progress verify
+
+      - name: Build & test
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+        run: >
+          mvn -B -ntp verify
+          -Djwt.secret="${JWT_SECRET:-ci-test-secret-value-must-be-at-least-32-chars}"
+          -Dmistral.api.key="${MISTRAL_API_KEY:-ci-placeholder}"
       - name: Validate Jib image build
-        working-directory: backend
-        run: mvn --batch-mode --no-transfer-progress jib:buildTar -Djib.outputPaths=/tmp/quizz-backend.tar
+        run: mvn -B -ntp jib:buildTar -Djib.outputPaths=/tmp/quizz-backend.tar
+
+      - name: Upload test reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-surefire-reports
+          path: backend/target/surefire-reports/
+          retention-days: 7
 
   frontend:
     name: Frontend (Angular)
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: 22
           cache: npm
           cache-dependency-path: frontend/package-lock.json
+
       - name: Install dependencies
-        working-directory: frontend
         run: npm ci
+
       - name: Lint
-        working-directory: frontend
         run: npm run lint
-      - name: Unit tests
-        working-directory: frontend
-        run: npm run test -- --watch=false --browsers=ChromeHeadless
-      - name: Production build
-        working-directory: frontend
+
+      - name: Build
         run: npm run build
+
+      - name: Unit tests
+        run: npm test -- --watch=false --browsers=ChromeHeadless
 
   mobile:
     name: Mobile (Ionic)
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: 22
           cache: npm
           cache-dependency-path: mobile/package-lock.json
       - name: Install dependencies
-        working-directory: mobile
         run: npm ci
       - name: Build
-        working-directory: mobile
         run: npm run build

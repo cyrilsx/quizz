@@ -10,7 +10,7 @@ Créer une plateforme de quizz avec Spring Boot (backend) et Angular (frontend),
 - Internationalisation (i18n).
 
 ## Architecture
-Voir [Architecture.md](docs/architecture.md) pour les détails.
+Voir [architecture.md](architecture.md) pour les détails.
 
 ## Étapes de Développement
 
@@ -36,8 +36,8 @@ Voir [Architecture.md](docs/architecture.md) pour les détails.
   - Jasmine/Karma.
 
 ### 3. Base de Données
-- Schéma PostgreSQL : [schema.sql](db/schema.sql).
-- Seeds : [data.sql](db/data.sql) pour les rôles utilisateurs.
+- Schéma PostgreSQL : [schema.sql](backend/src/main/resources/schema.sql).
+- Seeds : [data.sql](backend/src/main/resources/data.sql) pour les rôles utilisateurs.
 
 ### 4. Déploiement
 - **Local** :
