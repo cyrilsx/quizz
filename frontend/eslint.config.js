@@ -1,47 +1,53 @@
-import angular from '@angular-eslint/eslint-plugin';
-import templateParser from '@angular-eslint/template-parser';
-import typescriptEslint from '@typescript-eslint/eslint-plugin';
-import typescriptParser from '@typescript-eslint/parser';
+import { configs } from 'angular-eslint';
+import typescriptEslint from 'typescript-eslint';
+
+const forFiles = (files, entries) =>
+  entries.map((entry) => ({ ...entry, files }));
 
 export default [
   {
-    files: ["**/*.ts"],
-    ignores: ["**/api/**/*"],
-    languageOptions: {
-      parser: typescriptParser,
-      parserOptions: {
-        ecmaVersion: 2020,
-        sourceType: 'module',
-        project: './tsconfig.json'
-      }
-    },
-    plugins: {
-      '@angular-eslint': angular,
-      '@typescript-eslint': typescriptEslint
-    },
+    ignores: ['**/api/**/*'],
+  },
+  ...forFiles(
+    ['**/*.ts'],
+    [...configs.tsRecommended, ...typescriptEslint.configs.recommended],
+  ),
+  {
+    files: ['**/*.ts'],
     rules: {
-      ...angular.configs.recommended.rules,
-      ...typescriptEslint.configs.recommended.rules,
       '@angular-eslint/component-selector': [
         'error',
         {
           type: 'element',
           prefix: 'app',
-          style: 'kebab-case'
-        }
+          style: 'kebab-case',
+        },
       ],
       '@angular-eslint/directive-selector': [
         'error',
         {
           type: 'attribute',
           prefix: 'app',
-          style: 'camelCase'
-        }
+          style: 'camelCase',
+        },
       ],
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@angular-eslint/prefer-inject': 'off'
-    }
-  }
+      '@angular-eslint/prefer-inject': 'off',
+    },
+  },
+  ...forFiles(
+    ['**/*.html'],
+    [
+      ...configs.templateRecommended,
+      ...configs.templateAccessibility,
+    ],
+  ),
+  {
+    files: ['**/*.html'],
+    rules: {
+      '@angular-eslint/template/prefer-control-flow': 'warn',
+    },
+  },
 ];
