@@ -170,6 +170,7 @@
                         <image>${project.artifactId}</image>
                     </to>
                     <container>
+                        <mainClass>com.quizzplatform.QuizzBackendApplication</mainClass>
                         <ports>
                             <port>8080</port>
                         </ports>

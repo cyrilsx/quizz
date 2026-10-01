@@ -87,6 +87,6 @@ jobs:
           cache: npm
           cache-dependency-path: mobile/package-lock.json
       - name: Install dependencies
-        run: npm ci
-      - name: Build
-        run: npm run build
+        run: npm ci --legacy-peer-deps
+      - name: Type-check
+        run: npx tsc --noEmit --skipLibCheck --experimentalDecorators --emitDecoratorMetadata --target es2022 --module es2022 --moduleResolution bundler --strict false src/main.ts

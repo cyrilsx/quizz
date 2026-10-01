@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { QuizService } from '../../../services/quiz.service';
+import { QuizService } from '../../services/quiz.service';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { QrScannerService } from '../../../services/qr-scanner.service';
+import { QrScannerService } from '../../services/qr-scanner.service';
 import { AlertController, Platform } from '@ionic/angular';
 
 @Component({

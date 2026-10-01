@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { Storage } from '@ionic/storage-angular';
 
 @Injectable({
@@ -27,42 +27,36 @@ export class QuizService {
   }
 
   createQuiz(quizData: any): Observable<any> {
-    return this.getAuthHeaders().then(headers => {
-      return this.http.post(`${this.apiUrl}/quizzes`, quizData, { headers });
-    });
+    return from(this.getAuthHeaders().then(headers =>
+      this.http.post(`${this.apiUrl}/quizzes`, quizData, { headers })));
   }
 
   updateQuiz(id: number, quizData: any): Observable<any> {
-    return this.getAuthHeaders().then(headers => {
-      return this.http.put(`${this.apiUrl}/quizzes/${id}`, quizData, { headers });
-    });
+    return from(this.getAuthHeaders().then(headers =>
+      this.http.put(`${this.apiUrl}/quizzes/${id}`, quizData, { headers })));
   }
 
   deleteQuiz(id: number): Observable<any> {
-    return this.getAuthHeaders().then(headers => {
-      return this.http.delete(`${this.apiUrl}/quizzes/${id}`, { headers });
-    });
+    return from(this.getAuthHeaders().then(headers =>
+      this.http.delete(`${this.apiUrl}/quizzes/${id}`, { headers })));
   }
 
   generateShareToken(quizId: number): Observable<any> {
-    return this.getAuthHeaders().then(headers => {
-      return this.http.post(`${this.apiUrl}/quizzes/${quizId}/share`, {}, { headers });
-    });
+    return from(this.getAuthHeaders().then(headers =>
+      this.http.post(`${this.apiUrl}/quizzes/${quizId}/share`, {}, { headers })));
   }
 
   generateQRCode(quizId: number, baseUrl: string = 'http://localhost:8100'): Observable<any> {
-    return this.getAuthHeaders().then(headers => {
-      return this.http.get(`${this.apiUrl}/qrcodes/quiz/${quizId}`, {
+    return from(this.getAuthHeaders().then(headers =>
+      this.http.get(`${this.apiUrl}/qrcodes/quiz/${quizId}`, {
         headers,
         params: { baseUrl }
-      });
-    });
+      })));
   }
 
   generateAIQuestions(topic: string, count: number = 5): Observable<any> {
-    return this.getAuthHeaders().then(headers => {
-      return this.http.post(`${this.apiUrl}/ia/generate-questions`, { topic, count }, { headers });
-    });
+    return from(this.getAuthHeaders().then(headers =>
+      this.http.post(`${this.apiUrl}/ia/generate-questions`, { topic, count }, { headers })));
   }
 
   private async getAuthHeaders(): Promise<HttpHeaders> {
