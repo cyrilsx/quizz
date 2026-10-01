@@ -19,6 +19,9 @@ jobs:
       - name: Build and test
         working-directory: backend
         run: mvn --batch-mode --no-transfer-progress verify
+      - name: Validate Jib image build
+        working-directory: backend
+        run: mvn --batch-mode --no-transfer-progress jib:buildTar -Djib.outputPaths=/tmp/quizz-backend.tar
 
   frontend:
     name: Frontend (Angular)

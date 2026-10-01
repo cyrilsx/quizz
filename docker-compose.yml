@@ -21,7 +21,7 @@ services:
       - "6379:6379"
 
   backend:
-    build: ./backend
+    image: backend:latest  # build with: mvn -f backend/pom.xml jib:dockerBuild
     environment:
       DB_URL: jdbc:postgresql://db:5432/quizz
       DB_USERNAME: quizz
