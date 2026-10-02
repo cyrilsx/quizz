@@ -34,6 +34,8 @@ jobs:
           mvn -B -ntp verify
           -Djwt.secret="${JWT_SECRET:-ci-test-secret-value-must-be-at-least-32-chars}"
           -Dmistral.api.key="${MISTRAL_API_KEY:-ci-placeholder}"
+      - name: Validate Jib image build
+        run: mvn -B -ntp jib:buildTar -Djib.outputPaths=/tmp/quizz-backend.tar
 
       - name: Upload test reports
         if: failure()
@@ -70,3 +72,21 @@ jobs:
 
       - name: Unit tests
         run: npm test -- --watch=false --browsers=ChromeHeadless
+
+  mobile:
+    name: Mobile (Ionic)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+      - name: Type-check
+        run: npx tsc --noEmit --skipLibCheck --experimentalDecorators --emitDecoratorMetadata --target es2022 --module es2022 --moduleResolution bundler --strict false src/main.ts
