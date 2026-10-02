@@ -174,9 +174,6 @@
                         <ports>
                             <port>8080</port>
                         </ports>
-                        <environment>
-                            <SPRING_PROFILES_ACTIVE>default</SPRING_PROFILES_ACTIVE>
-                        </environment>
                     </container>
                 </configuration>
             </plugin>
