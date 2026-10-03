@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
+import {HttpParams} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {CookieService} from './cookie.service';
 import {
@@ -25,8 +26,9 @@ export class QuizService {
     return this.http.get<QuizResponse[]>(`${this.apiUrl}/quizzes`);
   }
 
-  getQuizById(id: number): Observable<QuizResponse> {
-    return this.http.get<QuizResponse>(`${this.apiUrl}/quizzes/${id}`);
+  getQuizById(id: number, shareToken?: string): Observable<QuizResponse> {
+    const params = shareToken ? new HttpParams().set('token', shareToken) : undefined;
+    return this.http.get<QuizResponse>(`${this.apiUrl}/quizzes/${id}`, { params });
   }
 
   createQuiz(quizData: QuizRequest): Observable<QuizResponse> {

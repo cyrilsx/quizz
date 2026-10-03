@@ -37,6 +37,7 @@ export class QuizzPlayerComponent implements OnInit {
   score: number = 0;
   isLoading: boolean = false;
   error: string | null = null;
+  shareToken: string | null = null;
   quizCompleted: boolean = false;
 
   constructor(
@@ -47,6 +48,7 @@ export class QuizzPlayerComponent implements OnInit {
 
   ngOnInit(): void {
     this.quizId = Number(this.route.snapshot.paramMap.get('id'));
+    this.shareToken = this.route.snapshot.queryParamMap.get('token');
     this.loadQuiz();
   }
 
@@ -54,7 +56,7 @@ export class QuizzPlayerComponent implements OnInit {
     this.isLoading = true;
     this.error = null;
 
-    this.quizService.getQuizById(this.quizId).subscribe({
+    this.quizService.getQuizById(this.quizId, this.shareToken ?? undefined).subscribe({
       next: (quiz) => {
         this.quizTitle = quiz.title || '';
         // In a real implementation, you would load questions from the quiz
