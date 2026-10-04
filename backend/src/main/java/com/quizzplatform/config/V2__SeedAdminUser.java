@@ -29,8 +29,8 @@ public class V2__SeedAdminUser extends BaseJavaMigration {
             if (adminExists(context)) {
                 return;
             }
-            throw new IllegalStateException(
-                "ADMIN_PASSWORD must be set to create the initial admin user");
+            System.out.println("Skipping admin user creation: ADMIN_PASSWORD is not set");
+            return;
         }
 
         String existingHash = findPasswordHash(context);
