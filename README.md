@@ -36,8 +36,8 @@ Voir [architecture.md](architecture.md) pour les détails.
   - Jasmine/Karma.
 
 ### 3. Base de Données
-- Schéma PostgreSQL : [schema.sql](backend/src/main/resources/schema.sql).
-- Seeds : [data.sql](backend/src/main/resources/data.sql) pour les rôles utilisateurs.
+- Schéma PostgreSQL : migrations Flyway dans `backend/src/main/resources/db/migration/` (appliquées automatiquement au démarrage).
+- Utilisateur admin initial créé par la migration Java `V2__SeedAdminUser` (mot de passe via `ADMIN_PASSWORD`).
 
 ### 4. Déploiement
 - **Local** :
