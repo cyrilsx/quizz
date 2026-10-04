@@ -89,12 +89,16 @@ jobs:
           BACKEND_IMAGE: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE }}:latest
           FRONTEND_IMAGE: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE }}:latest
         run: |
+          if [ -z "$RENDER_API_KEY" ]; then
+            echo "::warning::RENDER_API_KEY not set - images pushed to GHCR, skipping Render deploy. Add the secret and re-run this workflow to deploy."
+            exit 0
+          fi
           set -euo pipefail
           deploy() {
             local service_id="$1"
             local image_url="$2"
             if [ -z "$service_id" ]; then
-              echo "Skipping empty service ID"
+              echo "::warning::Service ID variable empty - skipping $image_url"
               return
             fi
             echo "Triggering deploy for $service_id ($image_url)..."
