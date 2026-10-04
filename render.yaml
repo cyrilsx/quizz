@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: quizz-backend
+    runtime: image
+    image:
+      url: ghcr.io/cyrilsx/quizz-backend:latest
+    plan: free
+    healthCheckPath: /actuator/health
+    autoDeploy: false
+    envVars:
+      - key: DB_URL
+        sync: false
+      - key: DB_USERNAME
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+      - key: JWT_SECRET
+        generateValue: false
+        sync: false
+      - key: MISTRAL_API_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+
+  - type: web
+    name: quizz-frontend
+    runtime: image
+    image:
+      url: ghcr.io/cyrilsx/quizz-frontend:latest
+    plan: free
+    autoDeploy: false
