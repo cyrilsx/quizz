@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {QuizService} from '../../core/quiz.service';
 import {ActivatedRoute, RouterModule} from '@angular/router';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
@@ -25,7 +25,7 @@ interface Answer {
 @Component({
   selector: 'app-quizz-player',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatButtonModule, MatCardModule, MatProgressSpinnerModule, MatProgressBarModule, MatIconModule, RouterModule],
+  imports: [CommonModule, TranslatePipe, MatButtonModule, MatCardModule, MatProgressSpinnerModule, MatProgressBarModule, MatIconModule, RouterModule],
   templateUrl: './quizz-player.component.html',
   styleUrls: ['./quizz-player.component.css']
 })

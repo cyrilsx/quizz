@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {AuthService} from '../../core/auth.service';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -13,7 +13,7 @@ import {MatIconModule} from '@angular/material/icon';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatCardModule, FormsModule, RouterModule, MatIconModule],
+  imports: [CommonModule, TranslatePipe, MatButtonModule, MatInputModule, MatFormFieldModule, MatCardModule, FormsModule, RouterModule, MatIconModule],
   template: `
     <div class="login-container">
       <mat-card class="login-card">

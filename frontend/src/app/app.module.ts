@@ -1,13 +1,13 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClient, provideHttpClient} from '@angular/common/http';
+import {provideHttpClient} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {RouterModule} from '@angular/router';
 
 
 // Translation
-import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {provideTranslateService} from '@ngx-translate/core';
+import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';
 
 // Components
 import {AppComponent} from './app.component';
@@ -20,11 +20,6 @@ import {HomeComponent} from './features/home/home.component';
 import {AuthService} from './core/auth.service';
 import {QuizService} from './core/quiz.service';
 import {AppTranslateService} from './core/translate.service';
-
-// AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
 
 @NgModule({
   declarations: [],
@@ -39,20 +34,14 @@ export function HttpLoaderFactory(http: HttpClient) {
       { path: '', redirectTo: '/home', pathMatch: 'full' }
     ]),
 
-    // Translation
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
   ],
   providers: [
     AuthService,
     QuizService,
     AppTranslateService,
     provideHttpClient(),
+    ...provideTranslateHttpLoader({prefix: './assets/i18n/', suffix: '.json'}),
+    provideTranslateService(),
   ],
   bootstrap: [AppComponent]
 })

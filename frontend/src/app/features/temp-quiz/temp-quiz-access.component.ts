@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {QuizService} from '../../core/quiz.service';
 import {AuthService} from '../../core/auth.service';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -15,7 +15,7 @@ import {MatIconModule} from '@angular/material/icon';
 @Component({
   selector: 'app-temp-quiz-access',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatCardModule, MatCheckboxModule, FormsModule, RouterModule, MatIconModule],
+  imports: [CommonModule, TranslatePipe, MatButtonModule, MatInputModule, MatFormFieldModule, MatCardModule, MatCheckboxModule, FormsModule, RouterModule, MatIconModule],
   template: `
     <div class="temp-quiz-access-container">
       <mat-card class="access-card">

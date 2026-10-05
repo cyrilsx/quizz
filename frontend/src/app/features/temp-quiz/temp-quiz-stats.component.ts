@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {QuizService} from '../../core/quiz.service';
 import {AuthService} from '../../core/auth.service';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
@@ -43,7 +43,7 @@ interface TempQuizStats {
   selector: 'app-temp-quiz-stats',
   standalone: true,
   imports: [
-    CommonModule, TranslateModule, MatButtonModule, MatCardModule, 
+    CommonModule, TranslatePipe, MatButtonModule, MatCardModule, 
     MatTableModule, MatProgressSpinnerModule, MatDividerModule, 
     MatIconModule, RouterModule, DatePipe
   ],
