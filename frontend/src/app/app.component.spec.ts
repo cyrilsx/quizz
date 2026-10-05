@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {AppComponent} from './app.component';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslateService, provideTranslateService} from '@ngx-translate/core';
 import {AuthService} from './core/auth.service';
 import {AppTranslateService} from './core/translate.service';
 import {provideRouter} from '@angular/router';
@@ -18,8 +18,9 @@ describe('AppComponent', () => {
     const appTranslateSpy = jasmine.createSpyObj<AppTranslateService>('AppTranslateService', ['use']);
 
     await TestBed.configureTestingModule({
-      imports: [AppComponent, TranslateModule.forRoot()],
+      imports: [AppComponent],
       providers: [
+        provideTranslateService(),
         provideRouter([]),
         provideNoopAnimations(),
         {provide: AuthService, useValue: authServiceSpy},

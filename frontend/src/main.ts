@@ -5,17 +5,11 @@ import {AppComponent} from './app/app.component';
 import {environment} from './environments/environment';
 import {provideRouter} from '@angular/router';
 import {provideHttpClient} from '@angular/common/http';
-import {importProvidersFrom} from '@angular/core';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {HttpClient} from '@angular/common/http';
+import {provideTranslateService} from '@ngx-translate/core';
+import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';
 
 if (environment.production) {
   enableProdMode();
-}
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 bootstrapApplication(AppComponent, {
@@ -32,13 +26,8 @@ bootstrapApplication(AppComponent, {
       { path: '', redirectTo: '/home', pathMatch: 'full' }
     ]),
     provideHttpClient(),
-    importProvidersFrom(TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    }))
+    ...provideTranslateHttpLoader({prefix: './assets/i18n/', suffix: '.json'}),
+    provideTranslateService()
   ]
 })
   .catch(err => console.error(err));

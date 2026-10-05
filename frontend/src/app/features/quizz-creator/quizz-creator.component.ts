@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {AuthService} from '../../core/auth.service';
 import {CookieService} from '../../core/cookie.service';
 import {QuizService} from '../../core/quiz.service';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -28,7 +28,7 @@ interface Answer {
 @Component({
   selector: 'app-quizz-creator',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatCheckboxModule, MatProgressSpinnerModule, FormsModule, MatIconModule, RouterModule],
+  imports: [CommonModule, TranslatePipe, MatButtonModule, MatInputModule, MatFormFieldModule, MatCheckboxModule, MatProgressSpinnerModule, FormsModule, MatIconModule, RouterModule],
   templateUrl: './quizz-creator.component.html',
   styleUrls: ['./quizz-creator.component.css']
 })

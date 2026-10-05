@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {AuthService} from '../../core/auth.service';
 import {CookieService} from '../../core/cookie.service';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslatePipe, TranslateService} from '@ngx-translate/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
@@ -10,7 +10,7 @@ import {RouterModule} from '@angular/router';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, TranslateModule, MatButtonModule, MatCardModule, RouterModule],
+  imports: [CommonModule, TranslatePipe, MatButtonModule, MatCardModule, RouterModule],
   template: `
     <div class="home-container">
       <h1>{{ 'HOME.WELCOME' | translate }}</h1>
