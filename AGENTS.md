@@ -16,8 +16,8 @@ quizz-platform/
 │   │   ├── translation/       # i18n module
 │   │   └── config/            # Configuration classes
 │   └── src/main/resources/
-│       ├── schema.sql         # Database schema
-│       ├── data.sql           # Seed data
+│       ├── db/migration/    # Flyway migrations
+│       
 │       └── openapi.yaml       # API documentation
 │
 ├── frontend/                   # Angular 22.2 application
@@ -54,7 +54,7 @@ quizz-platform/
 
 **Key Files:**
 - `backend/src/main/java/com/quizzplatform/**/*.java`
-- `backend/src/main/resources/schema.sql`
+- `backend/src/main/resources/db/migration/` (Flyway)
 - `backend/src/main/resources/openapi.yaml`
 
 **Conventions:**

@@ -32,6 +32,9 @@ services:
       JWT_SECRET: ${JWT_SECRET:?JWT_SECRET must be set}
       MISTRAL_API_KEY: ${MISTRAL_API_KEY:-}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8081}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@example.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?ADMIN_PASSWORD must be set}
     ports:
       - "8080:8080"
     depends_on:
